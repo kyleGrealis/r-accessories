@@ -1,0 +1,49 @@
+---
+title: "Surround Facet with Color for Attention"
+format: html
+editor: source
+---
+
+
+This will surround a facet panel with a red rectangle
+```{r}
+geco_plotting |> 
+  ggplot(aes(mrc_num)) +
+  geom_bar() +
+  geom_rect(
+    data = subset(
+      geco_plotting, site %in% c("Peru")),
+      fill = NA, color = "red", size = 4,
+      xmin = -Inf, xmax = Inf,
+      ymin = -Inf, ymax = Inf
+  ) +
+  facet_wrap(~ site) +
+  theme_bw() +
+  labs(
+    x = "", y = "", fill = "MRC Dyspnea Scale",
+    title = "Count of MRC Dyspnea Class by Site"
+  )
+```
+
+If needed to to be completed in a `facet_grid()`...
+```{r}
+geco_plotting |> 
+  ggplot(aes(mrc_num)) +
+  geom_bar() +
+  geom_rect(
+    data = subset(
+      geco_plotting, 
+      site %in% c("Peru")) &
+      foo %in% c("a", "b"),
+      fill = NA, color = "red", size = 4,
+      xmin = -Inf, xmax = Inf,
+      ymin = -Inf, ymax = Inf
+  ) +
+  facet_wrap(foo ~ site) +
+  theme_bw() +
+  labs(
+    x = "", y = "", fill = "MRC Dyspnea Scale",
+    title = "Count of MRC Dyspnea Class by Site"
+  )
+```
+
