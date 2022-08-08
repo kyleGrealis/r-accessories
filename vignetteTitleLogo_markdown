@@ -1,0 +1,27 @@
+---
+title: Here goes my title and ![logo](package-logo.png){width=0.8in}
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{1. The name of my package vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.width=6, 
+  fig.height=4
+)
+
+options(rmarkdown.html_vignette.check_title = FALSE)  # this ensures lines 2 and 5 can be different
+```
+
+```{css, echo=FALSE}
+body > h1 > img {
+  position: relative;
+  bottom: -30px;                                      # this dropped the bottom of the image below the line of text
+  border: 0px solid rgba(0, 0, 0, 0.1);
+ }
+```
