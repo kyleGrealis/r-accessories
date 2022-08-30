@@ -1,0 +1,130 @@
+#
+# By: Kyle Grealis
+# When updating R version...
+#
+# Created: Sunday, May 15, 2022 at 17:21:35
+#
+# -------------------------------------------------------
+#
+# Load packages
+if (!require("remotes")) install.packages("remotes")
+remotes::install_cran(
+  c(
+    "aod",
+    "arrow",
+    "babynames",
+    "bookdown",
+    "blogdown",
+    "broom.mixed",
+    "car",
+    "caret",
+    "clipr",
+    "conflicted",
+    "data.table",
+    "describedata",
+    "devtools",
+    "discrim",
+    "distill",
+    "doParallel",
+    "DT",
+    "feather",
+    "flextable",
+    "flipbookr",
+    "fst",
+    "gapminder",
+    "GGally",
+    "ggforce",
+    "ggrepel",
+    "ggthemes",
+    "gh",
+    "gitcreds",
+    "globals",
+    "gt",
+    "gtsummary",
+    "haven",
+    "hexbin",
+    "hexView",
+    "infer",
+    "ISLR",
+    "ISLR2",
+    "janitor",
+    "jsonlite",
+    "kable",
+    "kableExtra",
+    "kknn",
+    "KMsurv",
+    "knitr",
+    "learnr",
+    "lintr",
+    "LocalControl",
+    "maps",
+    "mapproj",
+    "markdown",
+    "mgcv",
+    "medicaldata",
+    "miniUI",
+    "naivebayes",
+    "openintro",
+    "pkgbuild",
+    "poissonreg",
+    "profvis",
+    "quarto",
+    "RColorBrewer",
+    "reactablefmtr",
+    "reactlog",
+    "readODS",
+    "rio",
+    "rmarkdown",
+    "rmatio",
+    "roxygen2",
+    "rstanarm",
+    "rsconnect",
+    "rticles",
+    "RSQLite",
+    "rUM",
+    "shiny",
+    "shinycssloaders",
+    "shinyFeedback",
+    "shinythemes",
+    "skimr",
+    "sqldf",
+    "styler",
+    "survival",
+    "table1",
+    "testthat",
+    "thematic",
+    "tidycensus",
+    "tidymodels",
+    "tidyREDCap",
+    "tidyverse",
+    "usethis",
+    "varhandle",
+    "vcd",
+    "vcdExtra",
+    "vip",
+    "viridis",
+    "vroom",
+    "waiter",
+    "xaringan",
+    "xml2",
+    "yaml",
+    "zeallot"
+  )
+)
+
+remotes::install_github(
+  c(
+    "gadenbuie/xaringanExtra",
+    "glin/reactable",
+    "hadley/emo",
+    "jhelvy/xaringanBuilder",
+    "nutterb/redcapAPI",
+    "rstudio/chromote",
+    "rileytwo/darkstudio"
+  )
+)
+
+# -------------------------------------------------------
+# darkstudio
+library(darkstudio)
+darkstudio::activate()
