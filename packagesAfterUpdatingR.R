@@ -27,7 +27,7 @@ remotes::install_cran(
     "gtsummary",
     "haven",
     "hexbin",
-    "hexview",
+    "hexView",
     "infer",
     "ISLR",
     "ISLR2",
