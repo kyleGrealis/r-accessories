@@ -102,4 +102,4 @@ remotes::install_github(
   )
 )
 
-rscodeio::install_theme()
+rstudioapi::addTheme('https://raw.githubusercontent.com/johnnybarrels/rstudio-one-dark-pro-theme/master/OneDarkPro.rstheme', apply=TRUE, force=TRUE)
