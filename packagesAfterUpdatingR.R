@@ -97,11 +97,9 @@ remotes::install_github(
     "jhelvy/xaringanBuilder",
     "nutterb/redcapAPI",
     "rileytwo/darkstudio",
-    "rstudio/chromote"
+    "rstudio/chromote",
+    "anthonynorth/rscodeio"
   )
 )
 
-rstudioapi::addTheme(
-  "https://raw.githubusercontent.com/lusignan/RStudio-Material-Theme/main/material-darker.rstheme",
-  apply = TRUE
-)
+rscodeio::install_theme()
