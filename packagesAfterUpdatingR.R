@@ -87,7 +87,9 @@ remotes::install_cran(
     "xml2",
     "yaml",
     "zeallot"
-  ))
+  ),
+  force = TRUE
+)
 
 remotes::install_github(
   c(
@@ -97,7 +99,8 @@ remotes::install_github(
     "jhelvy/xaringanBuilder",
     "nutterb/redcapAPI",
     "rstudio/chromote"
-  )
+  ),
+  force = TRUE
 )
 
 # for RStudio Theme
