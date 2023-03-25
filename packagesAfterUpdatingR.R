@@ -96,10 +96,13 @@ remotes::install_github(
     "hadley/emo",
     "jhelvy/xaringanBuilder",
     "nutterb/redcapAPI",
-    "rileytwo/darkstudio",
-    "rstudio/chromote",
-    "anthonynorth/rscodeio"
+    "rstudio/chromote"
   )
 )
 
-rstudioapi::addTheme('https://raw.githubusercontent.com/johnnybarrels/rstudio-one-dark-pro-theme/master/OneDarkPro.rstheme', apply=TRUE, force=TRUE)
+# for RStudio Theme
+install.packages(
+  "rsthemes",
+  repos = c(gadenbuie = 'https://gadenbuie.r-universe.dev', getOption("repos"))
+)
+rsthemes::set_theme_dark("One Dark {rsthemes}")
