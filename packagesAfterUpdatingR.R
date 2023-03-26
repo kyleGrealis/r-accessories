@@ -108,4 +108,6 @@ install.packages(
   "rsthemes",
   repos = c(gadenbuie = 'https://gadenbuie.r-universe.dev', getOption("repos"))
 )
+
+rsthemes::install_rsthemes()
 rsthemes::set_theme_dark("One Dark {rsthemes}")
