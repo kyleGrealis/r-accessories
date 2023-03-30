@@ -12,6 +12,7 @@ remotes::install_cran(
     "distill",
     "doParellel",
     "DT",
+    "expss",
     "feather",
     "flextable",
     "ggforce",
