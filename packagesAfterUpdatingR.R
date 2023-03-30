@@ -2,6 +2,7 @@ if (!require('remotes')) install.packages('remotes')
 remotes::install_cran(
   c(
     "arrow",
+    "ggbeeswarm",
     "bookdown",
     "blogdown",
     "caret",
