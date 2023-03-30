@@ -17,6 +17,7 @@ remotes::install_cran(
     "feather",
     "flextable",
     "ggforce",
+    "glmer",
     "ggpmisc",
     "ggrepel",
     "ggthemes",
