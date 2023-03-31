@@ -1,4 +1,4 @@
-# calculate 95%CIs for Pearson's
+l# calculate 95%CIs for Pearson's
 #
 # place var1 & var2 in quotes: r_ci(dataset, 'var1', 'var2')
 r_ci <- function(dsn, var1, var2) {
@@ -23,6 +23,4 @@ r_ci <- function(dsn, var1, var2) {
   print(sprintf('LCL: %0.3f', limit_lower))
   print(sprintf('UCL: %0.3f', limit_upper))
 }
-
-r_ci(prism, 'catscore', 'sgrq_score')
 
