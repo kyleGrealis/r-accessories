@@ -122,7 +122,7 @@ remotes::install_cran(
     'yaml',
     'zeallot'
   ),
-  force = TRUE
+  force = FALSE
 )
 
 remotes::install_github(
@@ -131,7 +131,7 @@ remotes::install_github(
     'jhelvy/xaringanBuilder',
     'rstudio/chromote'
   ),
-  force = TRUE
+  force = FALSE
 )
 
 # for RStudio Theme
