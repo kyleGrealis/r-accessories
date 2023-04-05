@@ -11,6 +11,7 @@ remotes::install_cran(
     'caret',
     'clipr',
     'conflicted',
+    'corrr',
     'C50',
     'datasauRus',
     'data.table',
