@@ -32,6 +32,7 @@ remotes::install_cran(
     'ggforce',
     'ggpmisc',
     'ggrepel',
+    'ggstatsplot',
     'ggthemes',
     'ggtext',
     'gh',
