@@ -56,6 +56,7 @@ remotes::install_cran(
     'kknn',
     'KMsurv',
     'knitr',
+    'languageserver',
     'learnr',
     'lintr',
     'lme4',
@@ -142,5 +143,5 @@ install.packages(
   repos = c(gadenbuie = 'https://gadenbuie.r-universe.dev', getOption('repos'))
 )
 
-rsthemes::install_rsthemes()
-rsthemes::set_theme_dark('One Dark {rsthemes}')
+# rsthemes::install_rsthemes()
+# rsthemes::set_theme_dark('One Dark {rsthemes}')
