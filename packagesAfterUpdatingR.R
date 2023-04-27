@@ -70,6 +70,7 @@ remotes::install_cran(
     'miniUI',
     'moderndive',
     'naivebayes',
+    'openai',
     'openintro',
     'plotly',
     'pkgbuild',
