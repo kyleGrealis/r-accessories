@@ -97,6 +97,7 @@ remotes::install_cran(
     'roxygen2',
     'rpart',
     'rpart.plot',
+    'rspiro',        # for PFT data
     'rstan',
     'rstanarm',
     'rsconnect',
