@@ -1,4 +1,23 @@
 if (!require('remotes')) install.packages('remotes')
+
+# for RStudio Theme
+remotes::install_cran(
+  'rsthemes',
+  repos = c(gadenbuie = 'https://gadenbuie.r-universe.dev', getOption('repos'))
+)
+
+rsthemes::install_rsthemes()
+# rsthemes::set_theme_dark('One Dark {rsthemes}')
+
+remotes::install_github(
+  c(
+    'hadley/emo',
+    'jhelvy/xaringanBuilder',
+    'rstudio/chromote'
+  ),
+  force = FALSE
+)
+
 remotes::install_cran(
   c(
     'adaptive',
@@ -146,20 +165,3 @@ remotes::install_cran(
   force = FALSE
 )
 
-remotes::install_github(
-  c(
-    'hadley/emo',
-    'jhelvy/xaringanBuilder',
-    'rstudio/chromote'
-  ),
-  force = FALSE
-)
-
-# for RStudio Theme
-install.packages(
-  'rsthemes',
-  repos = c(gadenbuie = 'https://gadenbuie.r-universe.dev', getOption('repos'))
-)
-
-# rsthemes::install_rsthemes()
-# rsthemes::set_theme_dark('One Dark {rsthemes}')
