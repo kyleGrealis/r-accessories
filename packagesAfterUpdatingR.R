@@ -81,6 +81,7 @@ remotes::install_cran(
     'lintr',
     'lme4',
     'LocalControl',
+    'ltm',
     'markdown',
     'mboost',
     'medicaldata',
@@ -162,6 +163,8 @@ remotes::install_cran(
     'xrf',
     'yaml'
   ),
-  force = FALSE
+  force = FALSE,
+  dependencies = TRUE,
+  type = "source"
 )
 
