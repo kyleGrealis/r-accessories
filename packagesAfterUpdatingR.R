@@ -163,8 +163,6 @@ remotes::install_cran(
     'xrf',
     'yaml'
   ),
-  force = FALSE,
-  dependencies = TRUE,
-  type = "source"
+  force = FALSE
 )
 
