@@ -46,6 +46,6 @@ colors_and_italics <- function(df, freq) {
 
 # put both functions together to render the final table
 colored_freq_table <- function(df, top_n_values) {
-  freq <- most_frequent(fruits, top_n_values)
+  freq <- most_frequent(df, top_n_values)
   colors_and_italics(df, freq)
 }
