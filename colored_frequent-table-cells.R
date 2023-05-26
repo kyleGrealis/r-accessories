@@ -3,9 +3,6 @@ library(knitr)
 library(kableExtra)
 
 most_frequent <- function(df, top_n) {
-  # count the number of columns
-  num_cols <- ncol(df)
-  
   # pivot the original dataset so the common values can be counted
   long_df <-
     df |> 
