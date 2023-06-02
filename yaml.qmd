@@ -1,0 +1,18 @@
+---
+title: " <name> "
+author: "Kyle Grealis"
+format: 
+  html:
+    toc: true
+    toc-title: " "
+    self-contained: true
+    # css: styles.css
+    theme:                  
+      light: sandstone
+      dark: darkly
+    code-tools: true        # ability to view code
+    code-copy: true         # ability to copy code
+execute: 
+  echo: false
+  warning: false
+---
