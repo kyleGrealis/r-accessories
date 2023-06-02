@@ -6,7 +6,8 @@ pvalue <- function(x, ...) {
   g <- factor(rep(1:length(x), times=sapply(x, length)))
   if (is.numeric(y)) {
     # For numeric variables, perform ANOVA
-    p <- round(unlist(summary(aov(y ~ g, data = CHANGE_ME)))[9], digits = 3)
+    # p <- round(unlist(summary(aov(y ~ g, data = CHANGE_ME)))[9], digits = 3)
+    p <- t.test(y ~ g)$p.value
   } else {
     # For categorical variables, perform a chi-squared test of independence
     p <- round(chisq.test(table(y, g))$p.value, digits = 3)
@@ -39,6 +40,12 @@ render.strat <- function (label, n, ...) {
 rndr <- function(x, ...) {
   y <- render.default(x, ...)
   if (is.logical(x)) y[2] else y
+}
+
+# if only wanting mean & SD
+my.render.cont <- function(x) {
+  with(stats.apply.rounding(stats.default(x), digits=2), c("",
+                                                           "Mean (SD)"=sprintf("%s (&plusmn; %s)", MEAN, SD)))
 }
 
 
