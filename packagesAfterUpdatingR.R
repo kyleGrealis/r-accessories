@@ -107,6 +107,7 @@ remotes::install_cran(
     'prophet',
     'pscl',
     'quarto',
+    'ragg',
     'randomForest',
     'ranger',
     'reactable',
