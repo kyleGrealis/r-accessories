@@ -82,6 +82,8 @@ remotes::install_cran(
     'lme4',
     'LocalControl',
     'ltm',
+    'mapproj',
+    'maps',
     'markdown',
     'mboost',
     'medicaldata',
