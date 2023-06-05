@@ -166,6 +166,7 @@ remotes::install_cran(
     'xrf',
     'yaml'
   ),
+  type = 'binary',
   force = FALSE
 )
 
