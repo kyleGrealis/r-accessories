@@ -15,4 +15,5 @@ format:
 execute: 
   echo: false
   warning: false
+# server: shiny
 ---
