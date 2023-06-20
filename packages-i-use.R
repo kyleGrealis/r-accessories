@@ -21,7 +21,7 @@ remotes::install_github(
 remotes::install_cran(
   c(
     # Shiny packages:
-    'bs4dash',
+    'bs4Dash',
     'shiny',
     'shinycssloaders',
     'shinydashboard',
