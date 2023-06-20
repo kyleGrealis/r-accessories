@@ -1,38 +1,18 @@
-if (!require('remotes')) install.packages('remotes')
-
-# for RStudio Theme
-remotes::install_cran(
-  'rsthemes',
-  repos = c(gadenbuie = 'https://gadenbuie.r-universe.dev', getOption('repos'))
-)
-
-rsthemes::install_rsthemes()
-# rsthemes::set_theme_dark('One Dark {rsthemes}')
-
-remotes::install_github(
-  c(
-    'hadley/emo',
-    'jhelvy/xaringanBuilder',
-    'rstudio/chromote'
-  ),
-  force = FALSE
-)
-
 remotes::install_cran(
   c(
-    # 'adaptive',
-    # 'agua',
-    # 'aorsf',
-    # 'applicable',
+    'adaptive',
+    'agua',
+    'aorsf',
+    'applicable',
     # 'arrow',
-    # 'baguette',
-    # 'beeswarm',
-    # 'bestNormalize',
-    # 'bonsai',
-    # 'broom.mixed',
-    # 'brulee',
-    # 'car',
-    # 'censored',
+    'baguette',
+    'beeswarm',
+    'bestNormalize',
+    'bonsai',
+    'broom.mixed',
+    'brulee',
+    'car',
+    'censored',
     'conflicted',
     # 'corrplot',
     # 'corrr',
@@ -127,17 +107,24 @@ remotes::install_cran(
     'rUM',
     # 'rules',
     # 'sda',
+    
+    # Shiny packages:
+    'bs4dash',
     'shiny',
     'shinycssloaders',
     'shinydashboard',
-    # 'shinyFeedback',
+    'shinyFeedback',
+    'shinyJS',
+    'shinyMobile',
+    'shiny.semantic',
     'shinythemes',
+    'shinyWidgets',
     'skimr',
     # 'sparklr',
     # 'sparsediscrim',
     # 'sqldf',
     # 'stacks',
-    # 'styler',
+    'styler',
     # 'survival',
     # 'table1',
     'testthat',
@@ -166,7 +153,6 @@ remotes::install_cran(
     # 'xrf',
     'yaml'
   ),
-  type = 'binary',
+  # type = 'binary',
   force = FALSE
 )
-
