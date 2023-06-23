@@ -41,6 +41,9 @@ remotes::install_cran(
     
     # modeling / stats
     'tidymodels',
+    'doParallel',
+    'glmnet',
+    'ranger',
     'vip',
     
     # plotting / visuals / tables
