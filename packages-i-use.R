@@ -43,6 +43,9 @@ remotes::install_cran(
     'tidymodels',
     'doParallel',
     'glmnet',
+    'ltm',
+    'pwr',
+    'quantmod',
     'ranger',
     'vip',
     
