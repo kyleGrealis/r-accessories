@@ -41,6 +41,7 @@ remotes::install_cran(
     
     # modeling / stats
     'tidymodels',
+    'vip',
     
     # plotting / visuals / tables
     'DiagrammeR',
@@ -57,6 +58,7 @@ remotes::install_cran(
     'plotly',
     'reactable',
     'reactablefmtr',
+    'rpart.plot',
     'table1',
     'textrecipes',
     'text2vec',
