@@ -28,7 +28,7 @@ remotes::install_cran(
     'shinycssloaders',
     'shinydashboard',
     'shinyFeedback',
-    'shinyJS',
+    'shinyjs',
     'shinyMobile',
     'shiny.semantic',
     'shinythemes',
