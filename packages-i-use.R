@@ -110,3 +110,6 @@ remotes::install_cran(
   # type = 'binary',
   force = FALSE
 )
+
+
+rio::install_formats()
