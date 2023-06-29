@@ -13,7 +13,8 @@ remotes::install_github(
   c(
     'hadley/emo',
     'jhelvy/xaringanBuilder',
-    'rstudio/chromote'
+    'rstudio/chromote',
+    'clauswilke/colorblindr'
   ),
   force = FALSE
 )
