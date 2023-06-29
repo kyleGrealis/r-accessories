@@ -44,6 +44,7 @@ remotes::install_cran(
     'tidymodels',
     'doParallel',
     'glmnet',
+    'lme4',
     'ltm',
     'pwr',
     'quantmod',
@@ -106,7 +107,11 @@ remotes::install_cran(
     'styler',
     'tidyREDCap',
     'tidyverse',
-    'yaml'
+    'yaml',
+    
+    # more tidy stuff
+    'tidycensus',
+    'tidycoder'
   ),
   # type = 'binary',
   force = FALSE
