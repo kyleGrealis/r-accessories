@@ -111,7 +111,8 @@ remotes::install_cran(
     
     # more tidy stuff
     'tidycensus',
-    'tidycoder'
+    'tidycoder',
+    'tidygeocoder'
   ),
   # type = 'binary',
   force = FALSE
