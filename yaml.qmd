@@ -1,0 +1,21 @@
+---
+title: "<title>"
+# subtitle: "<subtitle>"
+author: "[Kyle Grealis](https://github.com/kyleGrealis/)"
+format: 
+  html:
+    toc: true
+    toc-title: " "
+    self-contained: true
+    css: styles.css
+    include-in-header:
+    - text: |
+        <link rel = "shortcut icon" href = "../shiny-projects/www/favicon.ico" />
+    theme: sandstone
+    code-tools: true        # ability to view code
+    code-copy: true         # ability to copy code
+execute: 
+  echo: false
+  warning: false
+# server: shiny
+---
