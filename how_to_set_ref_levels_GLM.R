@@ -29,6 +29,19 @@ glm(
   data = dat1
 )
 
+lme4::glmer(
+  outcome_yes/total_tested ~ cat_var + num_var + (1 | organization),
+  family = binomial(),
+  data = dat1
+)
+
+# with cbind() more closely reproduces SAS code
+lme4::glmer(
+  cbind(outcome_yes, outcome_no) ~ cat_var + num_var + (1 | organization),
+  family = binomial(),
+  data = dat1
+)
+
 
 
 
@@ -107,6 +120,12 @@ glm(
   data = dat4
 )
 
+# this matches the cbind() method used with dat1 above... at matches SAS
+lme4::glmer(
+  outcome ~ cat_var + num_var + (1 | organization),
+  family = binomial(),
+  data = dat4
+)
 
 
 
