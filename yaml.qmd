@@ -1,19 +1,23 @@
 ---
-title: "<title>"
+title: '<title>'
 # subtitle: "<subtitle>"
 author: "[Kyle Grealis](https://github.com/kyleGrealis/)"
 format: 
   html:
+    page-layout: full
+    grid: 
+      margin-width: 0px
     toc: true
     toc-title: " "
+    toc-location: left
     self-contained: true
     css: styles.css
     include-in-header:
     - text: |
         <link rel = "shortcut icon" href = "../shiny-projects/www/favicon.ico" />
     theme: sandstone
-    code-tools: true        # ability to view code
-    code-copy: true         # ability to copy code
+    code-tools: true
+    code-copy: true
 execute: 
   echo: false
   warning: false
