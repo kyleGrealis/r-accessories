@@ -54,6 +54,7 @@ remotes::install_cran(
     # plotting / visuals / tables
     'DiagrammeR',
     'dotwhisker',
+    'flextable',
     'ggstatsplot',
     'ggthemes',
     'ggtext',
@@ -96,6 +97,7 @@ remotes::install_cran(
     'knitr',
     'lintr',
     'markdown',
+    'officer',
     'quarto',
     'ragg',
     'redcapAPI',
@@ -103,6 +105,7 @@ remotes::install_cran(
     'rmarkdown',
     'rsconnect',
     'rUM',
+    'sjlabelled',
     'skimr',
     'styler',
     'tidyREDCap',
