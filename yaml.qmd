@@ -14,12 +14,13 @@ format:
     css: styles.css
     include-in-header:
     - text: |
-        <link rel = "shortcut icon" href = "../shiny-projects/www/favicon.ico" />
+        <link rel = "shortcut icon" href = "../www/favicon.ico" />
     theme: sandstone
     code-tools: true
     code-copy: true
 execute: 
   echo: false
   warning: false
+  cache: false
 # server: shiny
 ---
