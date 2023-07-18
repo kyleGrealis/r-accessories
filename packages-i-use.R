@@ -14,7 +14,8 @@ remotes::install_github(
     'hadley/emo',
     'jhelvy/xaringanBuilder',
     'rstudio/chromote',
-    'clauswilke/colorblindr'
+    'clauswilke/colorblindr',
+    'ddsjoberg/gtsummary'
   ),
   force = FALSE
 )
@@ -59,7 +60,6 @@ remotes::install_cran(
     'ggthemes',
     'ggtext',
     'gt',
-    'gtsummary',
     'kable',
     'kableExtra',
     'mapproj',
