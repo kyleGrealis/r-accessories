@@ -8,10 +8,10 @@ factor_table <- function(dsn) {
     ) |> 
     purrr::imap(
       ~janitor::tabyl(.x) |> 
-        rename(!!.y := 1) |> 
+        dplyr::rename(!!.y := 1) |> 
         janitor::adorn_pct_formatting(1)
     )
 }
 
 # example:
-palmerpenguins::penguins |> factor_table()
+# palmerpenguins::penguins |> factor_table()
