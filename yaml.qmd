@@ -1,6 +1,7 @@
 ---
-title: '<title>'
+title: "<title>"
 # subtitle: "<subtitle>"
+date: last-modified
 author: "[Kyle Grealis](https://github.com/kyleGrealis/)"
 format: 
   html:
