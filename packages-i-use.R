@@ -43,10 +43,12 @@ remotes::install_cran(
 
     # modeling / stats
     "tidymodels",
+    "broom.mixed",
     "doParallel",
     "glmnet",
     "lme4",
     "ltm",
+    "LongituRF",
     "pwr",
     "quantmod",
     "ranger",
@@ -66,6 +68,7 @@ remotes::install_cran(
     "mapproj",
     "maps",
     "mapview",
+    "multilevelmod",
     "plotly",
     "reactable",
     "reactablefmtr",
