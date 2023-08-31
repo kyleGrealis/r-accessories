@@ -43,10 +43,12 @@ remotes::install_cran(
 
     # modeling / stats
     "tidymodels",
+    "broom.mixed",
     "doParallel",
     "glmnet",
     "lme4",
     "ltm",
+    "LongituRF",
     "pwr",
     "quantmod",
     "ranger",
@@ -60,10 +62,13 @@ remotes::install_cran(
     "ggthemes",
     "ggtext",
     "gt",
+    "gtsummary",
     "kable",
     "kableExtra",
     "mapproj",
     "maps",
+    "mapview",
+    "multilevelmod",
     "plotly",
     "reactable",
     "reactablefmtr",
@@ -89,6 +94,8 @@ remotes::install_cran(
 
     # misc
     "conflicted",
+    "crsuggest",
+    "DT",
     "glue",
     "haven",
     "here",
@@ -99,6 +106,7 @@ remotes::install_cran(
     "markdown",
     "officer",
     "quarto",
+    "qpcR",
     "ragg",
     "redcapAPI",
     "rio",
