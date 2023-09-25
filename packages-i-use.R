@@ -24,8 +24,10 @@ remotes::install_cran(
   c(
     # Shiny packages:
     "bs4Dash",
+    "htmlwidgets",
     "miniUI",
     "reactlog",
+    "rhino",
     "shiny",
     "shinycssloaders",
     "shinydashboard",
@@ -93,6 +95,7 @@ remotes::install_cran(
     "usethis",
 
     # misc
+    "addinslist",
     "conflicted",
     "crsuggest",
     "DT",
