@@ -15,7 +15,8 @@ remotes::install_github(
     "jhelvy/xaringanBuilder",
     "rstudio/chromote",
     "clauswilke/colorblindr",
-    "ddsjoberg/gtsummary"
+    "ddsjoberg/gtsummary",
+    "dcomtois/sortLines"
   ),
   force = FALSE
 )
