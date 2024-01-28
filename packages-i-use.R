@@ -11,9 +11,10 @@ rsthemes::install_rsthemes()
 
 remotes::install_github(
   c(
-    "hadley/emo",
-    "jhelvy/xaringanBuilder",
-    "rstudio/chromote",
+    "rstudio/shiny",
+    "rstudio/bslib",
+    "Appsilon/rhino",
+    "Appsilon/shiny.router",
     "clauswilke/colorblindr",
     "ddsjoberg/gtsummary",
     "dcomtois/sortLines"
@@ -28,8 +29,6 @@ remotes::install_cran(
     "htmlwidgets",
     "miniUI",
     "reactlog",
-    "rhino",
-    "shiny",
     "shinycssloaders",
     "shinydashboard",
     "shinyFeedback",
@@ -109,6 +108,7 @@ remotes::install_cran(
     "lintr",
     "markdown",
     "officer",
+    "palmerpenguins",
     "quarto",
     "qpcR",
     "ragg",
