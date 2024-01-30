@@ -11,10 +11,6 @@ rsthemes::install_rsthemes()
 
 remotes::install_github(
   c(
-    "rstudio/shiny",
-    "rstudio/bslib",
-    "Appsilon/rhino",
-    "Appsilon/shiny.router",
     "clauswilke/colorblindr",
     "ddsjoberg/gtsummary",
     "dcomtois/sortLines"
@@ -25,23 +21,15 @@ remotes::install_github(
 remotes::install_cran(
   c(
     # Shiny packages:
-    "bs4Dash",
-    "htmlwidgets",
-    "miniUI",
-    "reactlog",
-    "shinycssloaders",
+    "bslib",
+    "shiny",
     "shinydashboard",
-    "shinyFeedback",
     "shinyjs",
-    "shinyMobile",
+    "shiny.router",
     "shiny.semantic",
-    "shinythemes",
-    "shinyWidgets",
-    "waiter",
 
     # webscraping
     "applicable",
-    "xml2",
 
     # modeling / stats
     "tidymodels",
@@ -63,12 +51,8 @@ remotes::install_cran(
     "ggstatsplot",
     "ggthemes",
     "ggtext",
-    "gt",
-    "gtsummary",
-    "kable",
     "kableExtra",
     "mapproj",
-    "maps",
     "mapview",
     "multilevelmod",
     "plotly",
@@ -86,51 +70,27 @@ remotes::install_cran(
     # for package development
     "available",
     "devtools",
-    "gh",
-    "gitcreds",
     "pak",
-    "pkgbuild",
-    "roxygen2",
-    "testthat",
-    "usethis",
 
     # misc
     "addinslist",
-    "conflicted",
     "crsuggest",
-    "DT",
-    "glue",
-    "haven",
-    "here",
     "janitor",
-    "jsonlite",
-    "knitr",
-    "lintr",
-    "markdown",
-    "officer",
     "palmerpenguins",
     "quarto",
     "qpcR",
-    "ragg",
     "redcapAPI",
     "rio",
-    "rmarkdown",
-    "rsconnect",
     "rUM",
     "sjlabelled",
     "skimr",
-    "styler",
     "tidyREDCap",
-    "tidyverse",
-    "yaml",
 
     # more tidy stuff
     "tidycensus",
     "tidycoder",
     "tidygeocoder"
-  ),
-  # type = 'binary',
-  force = FALSE
+  )
 )
 
 
