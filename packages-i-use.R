@@ -1,4 +1,4 @@
-if (!require("remotes")) install.packages("remotes")
+# if (!require("remotes")) install.packages("remotes")
 
 # for RStudio Theme
 remotes::install_cran(
@@ -12,8 +12,7 @@ rsthemes::install_rsthemes()
 remotes::install_github(
   c(
     "clauswilke/colorblindr",
-    "ddsjoberg/gtsummary",
-    "dcomtois/sortLines"
+    "dcomtois/sortLines" # for sorting lines in RStudio
   ),
   force = FALSE
 )
@@ -51,6 +50,7 @@ remotes::install_cran(
     "ggstatsplot",
     "ggthemes",
     "ggtext",
+    "gtsummary",
     "kableExtra",
     "mapproj",
     "mapview",
