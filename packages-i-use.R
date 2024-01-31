@@ -11,6 +11,7 @@ rsthemes::install_rsthemes()
 
 remotes::install_github(
   c(
+    "ManuelHentschel/vscDebugger",
     "clauswilke/colorblindr",
     "dcomtois/sortLines" # for sorting lines in RStudio
   ),
