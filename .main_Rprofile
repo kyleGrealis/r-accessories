@@ -1,0 +1,21 @@
+options(rstudio.help.showDataPreview = FALSE)
+
+options(shiny.port = 7209)
+# options(shiny.fullstacktrace = TRUE)
+
+# Use an external browser for displaying html files, such as {gt} and {xaringan}
+options(vsc.viewer = TRUE)
+# External browser for web apps, such as {shiny}
+options(vsc.browser = TRUE)
+# View help page in an external browser
+options(vsc.helpPanel = TRUE)
+# Use original data viewer
+options(vsc.view = TRUE)
+
+# needed for session watcher in VSCode
+# have rhino projects source this .Rprofile within the project!!
+if (interactive() && Sys.getenv("RSTUDIO") == "") {
+  source(file.path(Sys.getenv(if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"), ".vscode-R", "init.R"))
+}
+
+message("Main .Rprofile successfully loaded...")
