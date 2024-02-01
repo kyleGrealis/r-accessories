@@ -8,11 +8,11 @@ if (file.exists("renv")) {
 # Allow absolute module imports (relative to the app root).
 options(box.path = getwd())
 
-# Load main Rprofile
-if (.Platform$OS.type == "windows") {
-  source("C:/Users/kxg679/Documents/.Rprofile")
-} else {
-  source("~/.Rprofile")
-}
+# # Load main Rprofile
+# if (.Platform$OS.type == "windows") {
+#   source("C:/Users/kxg679/Documents/.Rprofile")
+# } else {
+#   source("~/.Rprofile")
+# }
 
 message("Rhino project .Rprofile successfully loaded...")
