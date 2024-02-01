@@ -45,4 +45,4 @@ if (interactive() && Sys.getenv("RSTUDIO") == "") {
   message("radian settings loaded...")
 }
 
-message("Rhino project .Rprofile successfully loaded...")
+message("Rhino project .Rprofile successfully loaded...\n")
