@@ -3,7 +3,11 @@ options(rstudio.help.showDataPreview = FALSE)
 # set the default CRAN mirror
 local({
   r <- getOption("repos")
+<<<<<<< HEAD
   r["CRAN"] <- "https://cran.rstudio.com/"
+=======
+  r["CRAN"] <- "https://cloud.r-project.org/"
+>>>>>>> 0e6f339bcb5bf96ac892cd8bd5e714700bbc5f99
   options(repos = r)
 })
 
@@ -30,6 +34,7 @@ options(radian.insert_new_line = TRUE)  # insert between prompts
 # have rhino projects source this .Rprofile within the project!!
 if (interactive() && Sys.getenv("RSTUDIO") == "") {
   source(
+<<<<<<< HEAD
     file.path(
       Sys.getenv(
         if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"
@@ -39,6 +44,14 @@ if (interactive() && Sys.getenv("RSTUDIO") == "") {
     )
   )
   message("radian settings loaded...")
+=======
+    file.path(Sys.getenv(
+      if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"
+    ), 
+    ".vscode-R", 
+    "init.R")
+  )
+>>>>>>> 0e6f339bcb5bf96ac892cd8bd5e714700bbc5f99
 }
 
-message("Main .Rprofile successfully loaded...")
+message("Main .Rprofile successfully loaded...\n")
