@@ -31,4 +31,4 @@ if (interactive() && Sys.getenv("RSTUDIO") == "") {
   )
 }
 
-message("Main .Rprofile successfully loaded...")
+message("Main .Rprofile successfully loaded...\n")
