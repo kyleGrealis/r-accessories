@@ -1,3 +1,17 @@
+# needed for session watcher in VSCode
+# have rhino projects source this .Rprofile within the project!!
+if (interactive() && Sys.getenv("RSTUDIO") == "") {
+  source(
+    file.path(
+      Sys.getenv(
+        if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"
+      ),
+      ".vscode-R",
+      "init.R"
+    )
+  )
+}
+
 if (file.exists("renv")) {
   source("renv/activate.R")
 } else {
@@ -30,19 +44,10 @@ options(radian.auto_indentation = TRUE)
 options(radian.tab_size = 2)
 options(radian.insert_new_line = TRUE)  # insert between prompts
 
-# needed for session watcher in VSCode
-# have rhino projects source this .Rprofile within the project!!
-if (interactive() && Sys.getenv("RSTUDIO") == "") {
-  source(
-    file.path(
-      Sys.getenv(
-        if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"
-      ),
-      ".vscode-R",
-      "init.R"
-    )
-  )
-  message("radian settings loaded...")
-}
+message("radian settings loaded...")
+
+
+# experimenting with this
+options(renv.config.external.libraries = "/Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/library")
 
 message("Rhino project .Rprofile successfully loaded...\n")
