@@ -10,7 +10,9 @@ if (interactive() && Sys.getenv("RSTUDIO") == "") {
       "init.R"
     )
   )
+  message("radian settings loaded...")
 }
+
 
 if (file.exists("renv")) {
   source("renv/activate.R")
@@ -44,10 +46,6 @@ options(radian.auto_indentation = TRUE)
 options(radian.tab_size = 2)
 options(radian.insert_new_line = TRUE)  # insert between prompts
 
-message("radian settings loaded...")
 
-
-# experimenting with this
-options(renv.config.external.libraries = "/Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/library")
 
 message("Rhino project .Rprofile successfully loaded...\n")
