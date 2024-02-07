@@ -1,3 +1,19 @@
+# needed for session watcher in VSCode
+# have rhino projects source this .Rprofile within the project!!
+if (interactive() && Sys.getenv("RSTUDIO") == "") {
+  source(
+    file.path(
+      Sys.getenv(
+        if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"
+      ),
+      ".vscode-R",
+      "init.R"
+    )
+  )
+  message("radian settings loaded...")
+}
+
+
 options(rstudio.help.showDataPreview = FALSE)
 
 # set the default CRAN mirror
@@ -27,20 +43,5 @@ options(radian.tab_size = 2)
 options(radian.insert_new_line = TRUE)  # insert between prompts
 options(radian.highlight_matching_bracket = FALSE)
 options(radian.complete_while_typing = TRUE)
-
-# needed for session watcher in VSCode
-# have rhino projects source this .Rprofile within the project!!
-if (interactive() && Sys.getenv("RSTUDIO") == "") {
-  source(
-    file.path(
-      Sys.getenv(
-        if (.Platform$OS.type == "windows") "USERPROFILE" else "HOME"
-      ),
-      ".vscode-R",
-      "init.R"
-    )
-  )
-  message("radian settings loaded...")
-}
 
 message("Main .Rprofile successfully loaded...\n")
