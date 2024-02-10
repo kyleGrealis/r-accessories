@@ -10,6 +10,20 @@ body .rstudio-themes-dark-grey {
     background: rgb(63, 71, 78) !important;
 }
 
+// color of the main bars for each section
+.rstudio-themes-dark-grey .rstudio-themes-background, .rstudio-themes-dark-grey .rstheme_toolbarWrapper, .rstudio-themes-dark-grey .gwt-TabLayoutPanelTabs .gwt-TabLayoutPanelTab-selected table.rstheme_tabLayoutCenter, .rstudio-themes-dark-grey .rstheme_secondaryToolbar, .rstudio-themes-dark-grey .GNVWDDMDJW.GNVWDDMDFP div.GNVWDDMDCP .GNVWDDMDET, .rstudio-themes-dark-grey .gwt-TabLayoutPanelContent, .rstudio-themes-dark-grey .gwt-TabLayoutPanel {
+    background: rgb(53 60 66);
+}
+
+// color behind the tabs
+.rstudio-themes-dark-grey .gwt-TabLayoutPanelTabs, .rstudio-themes-dark-grey .rstheme_minimizedWindowObject .rstheme_center {
+    background-image: none;
+    background: rgb(63, 71, 78) !important;
+}
+.rstudio-themes-dark-grey .GNVWDDMDNS {
+    background: linear-gradient(to right, rgba(63, 71, 78, 0), rgb(63, 71, 78) 13%);
+}
+
 // main font color
 .rstudio-themes-dark .gwt-TabLayoutPanelTabs table.rstheme_tabLayoutCenter,
   .editor_dark .ace_editor_theme {
@@ -20,6 +34,54 @@ body .rstudio-themes-dark-grey {
   color: rgb(86, 182, 194);
   // color: #ff0520; // original
 }
+
+// settings window pane --------
+.gwt-DialogBox {
+  border: solid 1px #181818;
+  border-radius: 5px 5px 0 0;
+  background: rgb(53 60 66);
+  overflow: hidden !important;
+  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.26);
+}
+.gwt-DialogBox .dialogTopCenter {
+  height: 24px;
+  background: rgb(63 71 78);
+  border-bottom: solid 1px #181818;
+}
+// color of "Options" in settings window top bar
+div.Caption {
+  color: #8f98a7;
+}
+.GNVWDDMDMP .gwt-TabLayoutPanelContentContainer {
+  border: 1px solid #181818;
+  background-color: rgb(40, 44, 52);
+  color: #8f98a7 !important;
+}
+.GNVWDDMDEL {
+  background-color: none;
+  border: 1px solid #181818;
+  color: #8f98a7;
+}
+.rstudio-HyperlinkLabel {
+    color: #7878a7;
+}
+#rstudio_label_console_options_panel,
+#rstudio_label_appearance_options_panel,
+#rstudio_label_pane_layout_options_panel,
+#rstudio_label_python_options_panel,
+#rstudio_label_sweave_options_panel,
+#rstudio_label_spelling_options_panel,
+#rstudio_label_git_svn_options_panel,
+#rstudio_label_publishing_options_panel,
+#rstudio_label_copilot_options_panel {
+    color: #8f98a7;
+}
+
+
+
+
+// original Atom Dark Theme starts here. Some background changes were made within
+// the `.terminal` class.
 
 .ace_gutter {
   background: #282c34;
