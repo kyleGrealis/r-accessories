@@ -2,7 +2,10 @@
 /* rs-theme-is-dark: TRUE */
 /* A port of Atom One Dark Theme */
 
-
+// main surround color
+body .rstudio-themes-dark-grey {
+    background: rgb(63, 71, 78) !important;
+}
 .rstudio-themes-dark-grey .gwt-SplitLayoutPanel-HDragger, .rstudio-themes-dark-grey .gwt-SplitLayoutPanel-VDragger {
     background: rgb(63, 71, 78) !important;
 }
