@@ -1,15 +1,12 @@
-/* rs-theme-name: Atom Dark */
+/* rs-theme-name: Kyle Dark */
 /* rs-theme-is-dark: TRUE */
 /* A port of Atom One Dark Theme */
 
-// gutters, borders for code boxes--tab text?
-body .rstudio-themes-dark-grey {
-    background: rgb(63, 71, 78);
-}
-// maybe redundant for above
+
 .rstudio-themes-dark-grey .gwt-SplitLayoutPanel-HDragger, .rstudio-themes-dark-grey .gwt-SplitLayoutPanel-VDragger {
-  background: rgb(63, 71, 78) !important;
+    background: rgb(63, 71, 78) !important;
 }
+
 // main font color
 .rstudio-themes-dark .gwt-TabLayoutPanelTabs table.rstheme_tabLayoutCenter,
   .editor_dark .ace_editor_theme {
@@ -21,8 +18,6 @@ body .rstudio-themes-dark-grey {
   // color: #ff0520; // original
 }
 
-
-// start of original code
 .ace_gutter {
   background: #282c34;
   color: #464d5c
@@ -33,11 +28,16 @@ body .rstudio-themes-dark-grey {
   background: #393939 ;
 }
 
-// This sets the font color for editor panels
 .ace_editor, .rstudio-themes-flat.ace_editor_theme .profvis-flamegraph, .rstudio-themes-flat.ace_editor_theme, .rstudio-themes-flat .ace_editor_theme {
   background-color: #282c34;
-  color: #8f98a7 !important;
-  //color: #abb2bf; // original
+  //color: #8f98a7 !important;
+  color: #abb2bf; // original
+}
+
+// change the cursor from red
+.ace_cursor {
+  color: rgb(86, 182, 194);
+  // color: #ff0520; // original
 }
 
 // Add a white mouse pointer
@@ -87,8 +87,9 @@ body .rstudio-themes-dark-grey {
   color: #c681dd
 }
 
+// text color
 .ace_keyword.ace_operator {
-  color: #abb2bf
+  color: #8f98a7 !important;
 }
 
 .ace_constant.ace_character,
@@ -205,7 +206,7 @@ body .rstudio-themes-dark-grey {
    background-color: #CCC;
 }
 .terminal .xterm-viewport {
-  background-color: #1D1F21;
+  background: rgb(63, 71, 78) !important;
   overflow-y: scroll;
 }
 .xtermInvertColor { color: #1D1F21; }
