@@ -1,18 +1,18 @@
-# if (!require("remotes")) install.packages("remotes")
+if (!require("remotes")) install.packages("remotes")
 
 # for RStudio Theme
-remotes::install_cran(
-  "rsthemes",
-  repos = c(gadenbuie = "https://gadenbuie.r-universe.dev", getOption("repos"))
-)
-
-rsthemes::install_rsthemes()
-# rsthemes::set_theme_dark('One Dark {rsthemes}')
+# remotes::install_cran(
+#   "rsthemes",
+#   repos = c(gadenbuie = "https://gadenbuie.r-universe.dev", getOption("repos"))
+# )
+# 
+# rsthemes::install_rsthemes()
+# # rsthemes::set_theme_dark('One Dark {rsthemes}')
 
 remotes::install_github(
   c(
-    "ManuelHentschel/vscDebugger",
     "clauswilke/colorblindr",
+    "mlverse/chattr",
     "dcomtois/sortLines" # for sorting lines in RStudio
   ),
   force = FALSE
