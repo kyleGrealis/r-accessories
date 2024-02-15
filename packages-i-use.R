@@ -77,6 +77,7 @@ remotes::install_cran(
     "addinslist",
     "crsuggest",
     "janitor",
+    "lorem",
     "palmerpenguins",
     "quarto",
     "qpcR",
