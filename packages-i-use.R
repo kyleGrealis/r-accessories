@@ -35,6 +35,7 @@ remotes::install_cran(
     "tidymodels",
     "broom.mixed",
     "doParallel",
+    "gee",
     "glmnet",
     "lme4",
     "ltm",
@@ -47,6 +48,7 @@ remotes::install_cran(
     # plotting / visuals / tables
     "DiagrammeR",
     "dotwhisker",
+    "extrafont",
     "flextable",
     "ggstatsplot",
     "ggthemes",
