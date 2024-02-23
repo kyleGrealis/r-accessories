@@ -1,0 +1,6 @@
+#!/bin/sh
+
+# reminder where to push changes
+
+branch_name=$(git symbolic-ref --short HEAD)
+echo "Don't forget to push your changes with: git push -u origin $branch_name"
