@@ -1,0 +1,40 @@
+---
+title: How to make a ham and cheese sandwich
+author:
+  - id: me
+    number: 1
+    name:
+      given: Raymond
+      family: Balise
+      literal: "Raymond R. Balise"
+      dropping-particle: string
+      non-dropping-particle: string
+    url: https://www.miami.edu
+    email: balise@miami.edu
+    phone: "650 303 1267"
+    fax: string
+    degrees:
+      "PhD"
+    orcid: "0000-0002-9856-5901"
+    note: "Its Me!"
+    acknowledgements: string
+    attributes:
+      corresponding: TRUE
+      equal-contributor: FALSE
+      deceased: FALSE
+    roles:
+      stuff
+    metadata: object
+    affiliations:
+      "University of Miami"
+abstract: This article covers the core elements of sandwich making
+keywords: Ham, Cheese, Sandwich
+number-sections: false
+format: 
+  html: 
+    code-tools: true
+    code-copy: true
+    code-fold: true
+editor: source
+---
+something
