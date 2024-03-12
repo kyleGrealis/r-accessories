@@ -9,16 +9,21 @@ if (!require("remotes")) install.packages("remotes")
 # rsthemes::install_rsthemes()
 # # rsthemes::set_theme_dark('One Dark {rsthemes}')
 
-remotes::install_github(
+install.packages("pak")
+
+# remotes::install_github(
+pak::pkg_install(
   c(
     "clauswilke/colorblindr",
     "mlverse/chattr",
     "dcomtois/sortLines" # for sorting lines in RStudio
   ),
-  force = FALSE
+  # force = FALSE
 )
 
-remotes::install_cran(
+
+# remotes::install_cran(
+pak::pak(
   c(
     # Shiny packages:
     "bslib",
@@ -40,9 +45,12 @@ remotes::install_cran(
     "lme4",
     "ltm",
     "LongituRF",
+    "pins",
+    "plumber",
     "pwr",
     "quantmod",
     "ranger",
+    "vetiver",
     "vip",
 
     # plotting / visuals / tables
@@ -75,7 +83,6 @@ remotes::install_cran(
     # for package development
     "available",
     "devtools",
-    "pak",
 
     # misc
     "addinslist",
@@ -94,7 +101,6 @@ remotes::install_cran(
 
     # more tidy stuff
     "tidycensus",
-    "tidycoder",
     "tidygeocoder"
   )
 )
