@@ -5,11 +5,11 @@ if (!require("remotes")) install.packages("remotes")
 #   "rsthemes",
 #   repos = c(gadenbuie = "https://gadenbuie.r-universe.dev", getOption("repos"))
 # )
-# 
+#
 # rsthemes::install_rsthemes()
 # # rsthemes::set_theme_dark('One Dark {rsthemes}')
 
-install.packages("pak")
+# install.packages("pak")
 
 # remotes::install_github(
 pak::pkg_install(
@@ -25,6 +25,12 @@ pak::pkg_install(
 # remotes::install_cran(
 pak::pak(
   c(
+    "arrow",
+    "BH",
+    "fstcore",
+    "RApiSerialize",
+    "stringfish",
+
     # Shiny packages:
     "bslib",
     "shiny",
