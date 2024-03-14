@@ -1,10 +1,10 @@
 #!/bin/bash
 
 # Path to your 'repo' directory
-repo_dir="/c/Users/kxg679/Desktop/repos"
+repo_dir="~/repos"
 
 # Path to the 'post-checkout' file in 'repos'
-post_checkout_file="/c/Users/kxg679/Desktop/repos/post-checkout"
+post_checkout_file="~/repos/post-checkout"
 
 # Iterate over all directories in 'repo'
 for dir in "$repo_dir"/*; do
