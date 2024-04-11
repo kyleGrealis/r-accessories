@@ -1,0 +1,64 @@
+// Place your key bindings in this file to override the defaults
+[
+  // custom bindings
+  {
+    "key": "ctrl+shift+m",
+    "command": "type",
+    "args": {
+      "text": " |>"
+    },
+    "when": "editorTextFocus"
+  },
+
+
+  // overwritten defaults
+  {
+    "key": "ctrl+d",
+    "command": "editor.action.deleteLines",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+k",
+    "command": "-editor.action.deleteLines",
+    "when": "textInputFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+d",
+    "command": "-editor.action.addSelectionToNextFindMatch",
+    "when": "editorFocus"
+  },
+  {
+    "key": "ctrl+shift+d",
+    "command": "editor.action.copyLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "shift+alt+down",
+    "command": "-editor.action.copyLinesDownAction",
+    "when": "editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "ctrl+shift+d",
+    "command": "-workbench.view.debug",
+    "when": "viewContainer.workbench.view.debug.enabled"
+  },
+  {
+    "key": "ctrl+alt+i",
+    "command": "-workbench.action.chat.open",
+    "when": "hasChatProvider"
+  },
+  {
+    "key": "ctrl+alt+i",
+    "command": "quarto.insertCodeCell",
+    "when": "editorTextFocus && !findInputFocussed && !replaceInputFocussed && editorLangId == 'quarto'"
+  },
+  {
+    "key": "ctrl+shift+i",
+    "command": "-quarto.insertCodeCell",
+    "when": "editorTextFocus && !findInputFocussed && !replaceInputFocussed && editorLangId == 'quarto'"
+  },
+  {
+    "key": "alt+backspace",
+    "command": "deleteAllLeft"
+  }
+]

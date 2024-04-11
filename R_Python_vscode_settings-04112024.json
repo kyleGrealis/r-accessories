@@ -1,0 +1,146 @@
+{
+    "projectManager.git.baseFolders": [
+        "C:\\Users\\kxg679\\Desktop\\repos",
+        "~/repos/"   // added 1/31/2024 for macOS & Linux
+    ],
+    "r.rpath.windows": "C:\\Program Files\\R\\R-4.3.3\\bin\\x64\\",
+    "r.rterm.windows": "C:\\Users\\kxg679\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\radian.exe",
+    "terminal.integrated.profiles.windows": {
+        "Git Bash": {
+            "path": "C:\\Program Files\\Git\\bin\\bash.exe",
+            "icon": "terminal-bash",
+            "color": "terminal.ansiGreen" // Green color
+        },
+        "R Interactive": {
+            "path": "C:\\Users\\kxg679\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\radian.exe",
+            "icon": "terminal",
+            "color": "terminal.ansiBlue" // Blue color
+        },
+        "R Terminal": {
+            "path": "C:\\Users\\kxg679\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\radian.exe",
+            "icon": "terminal",
+            "color": "terminal.ansiBlue" // Blue color
+        }
+    },
+    "r.bracketedPaste": true,
+    "r.plot.useHttpgd": true,
+    "r.session.viewers.viewColumn": {
+        "pageViewer": "Beside"
+    },
+    "editor.bracketPairColorization.independentColorPoolPerBracketType": true,
+    
+    // appearance theming --------------------------------------------------------
+    "terminal.integrated.fontFamily": "monospace",
+    "workbench.colorTheme": "Atom One Dark",
+    "workbench.colorCustomizations": {
+        "editor.foreground": "#aaa",
+    },
+    "editor.tokenColorCustomizations": {
+        "textMateRules": [
+            {
+                "scope": [
+                ],
+                "settings": {
+                    "foreground": "#E06C75"
+                }
+            },
+            {
+                "scope": [
+                    "punctuation.separator.parameters.r",
+                    "constant.numeric"
+                    
+                ],
+                "settings": {
+                    "foreground": "#E5C07B"
+                }
+            },
+            {
+                "scope": [
+                    "punctuation.section.brackets.single.begin.r"
+                ],
+                "settings": {
+                    "foreground": "#98C379"
+                }
+            },
+            {
+                "scope": [
+                    "variable",
+                    "entity.name.tag.html",
+                    "entity.name.tag.yaml" // key in yaml
+                ],
+                "settings": {
+                    "foreground": "#61AFEF"
+                }
+            },
+            {
+                "scope": [
+                    "entity.namespace.r",
+                    "meta.function-call.arguments.r",
+                    "keyword.other",
+                    "support.function"
+                ],
+                "settings": {
+                    "foreground": "#C678DD"
+                }
+            },
+            {
+                "scope": [
+                    "keyword.operator.arithmetic",
+                    "punctuation.separator",
+                    "keyword.operator.assignment",
+                    "support.type.property-name.css"
+                ],
+                "settings": {
+                    "foreground": "#56B6C2"
+                }
+            },
+            {
+                "scope": [
+                    "variable.other",
+                    "punctuation.section.braces.begin.r"
+                ],
+                "settings": {
+                    "foreground": "#ABB2BF"
+                }
+            }
+        ]
+    },
+    "quarto.cells.background.dark": "#32363e90",
+    "editor.minimap.enabled": false,
+    "security.workspace.trust.untrustedFiles": "open",
+    "errorLens.gutterIconsEnabled": true,
+    "errorLens.gutterIconSet": "borderless",
+    "editor.tabSize": 2,
+    "editor.wrappingIndent": "indent",
+    "editor.bracketPairColorization.enabled": true,
+    "editor.cursorStyle": "line-thin",
+    "editor.multiCursorModifier": "ctrlCmd",
+    "editor.rulers": [85, 120],
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 85,
+    
+    // Miscellaneous Terminal settings ----------------------------------------
+    "terminal.integrated.defaultProfile.windows": "Git Bash",
+    "terminal.integrated.cursorBlinking": true,
+    "terminal.integrated.fontSize": 12,
+    "editor.accessibilitySupport": "off",
+    "terminal.integrated.enableMultiLinePasteWarning": false,
+    // "markdown-preview-enhanced.codeBlockTheme": "one-dark.css",
+    "accessibility.signals.terminalBell": {
+        "sound": "on"
+    },
+    "terminal.integrated.enableVisualBell": true,
+    "terminal.integrated.tabs.location": "left",
+    "github.copilot.chat.welcomeMessage": "never",
+    "editor.defaultFormatter": "GitHub.copilot-chat",
+    "workbench.iconTheme": "vscode-icons",
+    "editor.smartSelect.selectLeadingAndTrailingWhitespace": false,
+    "editor.trimAutoWhitespace": true,
+    "accessibility.dimUnfocused.enabled": true,
+    "diffEditor.ignoreTrimWhitespace": true,
+    "explorer.confirmDragAndDrop": false,
+    "editor.fontSize": 12,
+    "editor.fontFamily": "Fira Code, Consolas, 'Courier New', monospace",
+    "explorer.confirmDelete": false,
+    "vsicons.dontShowNewVersionMessage": true,
+}
