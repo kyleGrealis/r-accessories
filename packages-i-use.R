@@ -1,3 +1,5 @@
+install.packages(c('Rcpp', 'RcppArmadillo'))
+
 if (!require("remotes")) install.packages("remotes")
 
 # for RStudio Theme
@@ -34,10 +36,6 @@ pak::pak(
     # Shiny packages:
     "bslib",
     "shiny",
-    "shinydashboard",
-    "shinyjs",
-    "shiny.router",
-    "shiny.semantic",
 
     # webscraping
     "applicable",
@@ -61,7 +59,6 @@ pak::pak(
 
     # plotting / visuals / tables
     "DiagrammeR",
-    "dotwhisker",
     "extrafont",
     "flextable",
     "ggiraph",
@@ -72,16 +69,9 @@ pak::pak(
     "kableExtra",
     "mapproj",
     "mapview",
-    "multilevelmod",
     "patchwork",
-    "plotly",
-    "reactable",
-    "reactablefmtr",
-    "rpart.plot",
     "table1",
     "textrecipes",
-    "text2vec",
-    "thematic",
     "vcd",
     "vcdExtra",
     "viridis",
@@ -103,11 +93,8 @@ pak::pak(
     "rUM",
     "sjlabelled",
     "skimr",
-    "tidyREDCap",
+    "tidyREDCap"
 
-    # more tidy stuff
-    "tidycensus",
-    "tidygeocoder"
   )
 )
 
