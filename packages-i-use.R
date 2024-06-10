@@ -18,8 +18,8 @@ pak::pkg_install(
   c(
     "ManuelHentschel/vscDebugger",
     "clauswilke/colorblindr",
-    "mlverse/chattr",
-    "dcomtois/sortLines" # for sorting lines in RStudio
+    # "mlverse/chattr",
+    # "dcomtois/sortLines" # for sorting lines in RStudio
   ),
   # force = FALSE
 )
