@@ -1,4 +1,4 @@
-install.packages(c('languageserver', 'Rcpp', 'RcppArmadillo'))
+# install.packages(c('languageserver', 'Rcpp', 'RcppArmadillo'))
 
 if (!require("remotes")) install.packages("remotes")
 
@@ -11,17 +11,13 @@ if (!require("remotes")) install.packages("remotes")
 # rsthemes::install_rsthemes()
 # # rsthemes::set_theme_dark('One Dark {rsthemes}')
 
-# install.packages("pak")
+install.packages("pak")
 
 # remotes::install_github(
 pak::pkg_install(
   c(
-    "ManuelHentschel/vscDebugger",
     "clauswilke/colorblindr",
-    # "mlverse/chattr",
-    # "dcomtois/sortLines" # for sorting lines in RStudio
-  ),
-  # force = FALSE
+  )
 )
 
 
