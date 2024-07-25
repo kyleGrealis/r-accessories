@@ -16,7 +16,7 @@ install.packages("pak")
 # remotes::install_github(
 pak::pkg_install(
   c(
-    "clauswilke/colorblindr",
+    "clauswilke/colorblindr"
   )
 )
 
