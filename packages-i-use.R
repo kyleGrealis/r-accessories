@@ -13,8 +13,8 @@ if (!require("remotes")) install.packages("remotes")
 
 install.packages("pak")
 
-# remotes::install_cran(
-pak::pak(
+remotes::install_cran(
+# pak::pak(
   c(
     "arrow",
     "BH",
@@ -49,7 +49,6 @@ pak::pak(
     "vip",
 
     # plotting / visuals / tables
-    "clauswilke/colorblindr",
     "DiagrammeR",
     "extrafont",
     "flextable",
