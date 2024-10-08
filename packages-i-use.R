@@ -1,4 +1,4 @@
-install.packages(c('Rcpp', 'RcppArmadillo'))
+# install.packages(c('Rcpp', 'RcppArmadillo'))
 
 if (!require("remotes")) install.packages("remotes")
 
@@ -16,9 +16,8 @@ if (!require("remotes")) install.packages("remotes")
 # remotes::install_github(
 pak::pkg_install(
   c(
-    "clauswilke/colorblindr",
-    "mlverse/chattr",
-    "dcomtois/sortLines" # for sorting lines in RStudio
+    "clauswilke/colorblindr"
+    # "mlverse/chattr"
   ),
   # force = FALSE
 )
@@ -43,6 +42,8 @@ pak::pak(
     # modeling / stats
     "tidymodels",
     "broom.mixed",
+    "DALEX",
+    "DALEXtra",
     "doParallel",
     "gee",
     "glmnet",
