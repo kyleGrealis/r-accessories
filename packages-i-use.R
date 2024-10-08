@@ -1,4 +1,4 @@
-# install.packages(c('Rcpp', 'RcppArmadillo'))
+# install.packages(c('languageserver', 'Rcpp', 'RcppArmadillo'))
 
 if (!require("remotes")) install.packages("remotes")
 
@@ -11,17 +11,7 @@ if (!require("remotes")) install.packages("remotes")
 # rsthemes::install_rsthemes()
 # # rsthemes::set_theme_dark('One Dark {rsthemes}')
 
-# install.packages("pak")
-
-# remotes::install_github(
-pak::pkg_install(
-  c(
-    "clauswilke/colorblindr"
-    # "mlverse/chattr"
-  ),
-  # force = FALSE
-)
-
+install.packages("pak")
 
 # remotes::install_cran(
 pak::pak(
@@ -59,6 +49,7 @@ pak::pak(
     "vip",
 
     # plotting / visuals / tables
+    "clauswilke/colorblindr",
     "DiagrammeR",
     "extrafont",
     "flextable",
