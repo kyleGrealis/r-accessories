@@ -1,3 +1,0 @@
-sudo apt install -y cmake trash-cli r-cran-rcpparmadillo libcurl4-openssl-dev gdal-bin gsfonts imagemagick libcairo2-dev libfontconfig1-dev libfreetype6-dev libfribidi-dev libgdal-dev libgeos-dev libgit2-dev libgl1-mesa-dev libglpk-dev libglu1-mesa-dev libgmp3-dev libharfbuzz-dev libicu-dev libjpeg-dev libmagick++-dev libmpfr-dev libnode-dev libpng-dev libproj-dev libsecret-1-dev libsodium-dev libsqlite3-dev libtiff-dev libudunits2-dev libxml2-dev pandoc pari-gp
-
-
