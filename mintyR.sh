@@ -8,6 +8,8 @@ echo "Starting setup at $(date)"
 
 # Backup .bashrc----------------------------------------------------
 cp ~/.bashrc ~/.bashrc.backup || echo "Warning: .bashrc backup failed"
+# new .bashrc & .bash_aliases files to be downloaded from GitHub gist / USB
+
 
 # Install package updates-------------------------------------------
 sudo apt update && sudo apt upgrade -y
@@ -60,7 +62,7 @@ R --version
 cd ..
 
 # Cleanup
-rm -rf R-4.4.2.tar.gz R-4.4.2
+rm -rf R-4.4.2.tar.gz
 
 echo "R installation completed successfully!"
 echo "Setup completed at $(date)"

@@ -1,5 +1,3 @@
-library(table1)
-
 # set up including p-values and strata %
 
 pvalue <- function(x, ...) {
@@ -8,7 +6,10 @@ pvalue <- function(x, ...) {
   g <- factor(rep(1:length(x), times=sapply(x, length)))
   if (is.numeric(y)) {
     # For numeric variables, perform ANOVA
-    p <- round(unlist(summary(aov(y ~ g, data = flash)))[9], digits = 3)
+    
+    ### YOU MUST CHANGE THE DATASET NAMED BELOW!! ###
+    # p <- round(unlist(summary(aov(y ~ g, data = CHANGE_ME)))[9], digits = 3)
+    p <- t.test(y ~ g)$p.value
   } else {
     # For categorical variables, perform a chi-squared test of independence
     p <- round(chisq.test(table(y, g))$p.value, digits = 3)
@@ -45,8 +46,8 @@ rndr <- function(x, ...) {
 
 # if only wanting mean & SD
 my.render.cont <- function(x) {
-  with(stats.apply.rounding(stats.default(x), digits=2), c("",
-                                                           "Mean (SD)"=sprintf("%s (&plusmn; %s)", MEAN, SD)))
+  with(stats.apply.rounding(stats.default(x), digits=2), 
+       c("", "Mean (SD)"=sprintf("%s (&plusmn; %s)", MEAN, SD)))
 }
 
 
