@@ -59,7 +59,7 @@ sudo make install || {
 # Verify installation
 R --version
 
-cd ..
+cd ~
 
 # Cleanup
 rm -rf R-4.4.2.tar.gz
