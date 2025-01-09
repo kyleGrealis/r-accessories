@@ -1,0 +1,82 @@
+---
+title: "Color Title for Legend"
+date: last-modified
+format:
+  html:
+    embed-resources: true
+    theme:
+      - default
+---
+
+```{r}
+#| echo: false
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(ggtext) # for element_markdown()
+
+input_data <- readRDS("input_data.whatever")
+
+model_colors <-
+  c(
+    "Group ABC" = "#30d5c8", # Turquoise
+    "Group XYZ" = "#B22222", # Firebrick
+    "Group 12345" = "black"
+  )
+
+forecast_all |>
+  mutate(
+    COLOR_GROUP =
+      case_when(
+        COLOR_GROUP == "Prediction value of Group ABC" ~ "Group ABC",
+        COLOR_GROUP == "Prediction value of Regular model" ~ "Group XYZ",
+        COLOR_GROUP == "Group 12345" ~ "Group 12345"
+      )
+  ) |>
+  ggplot(mapping = aes(x = X_AXIS, y = Y_AXIS)) +
+  geom_point(aes(color = COLOR_GROUP), size = 2) +
+  geom_line(aes(y = Y_AXIS, color = COLOR_GROUP, linewidth = factor(COLOR_GROUP))) +
+  labs(
+    x = "X_AXIS LABEL",
+    y = "Y_AXIS LABEL",
+    title = glue::glue(
+      # "Comparison of Group 12345 and then Group ABC and finally Group XYZ"
+      # there's a hidden space added to the end of this line
+      "Comparison of 
+      <span style='color: {model_colors[\"Group 12345\"]}'> 
+        Group 12345
+      </span>
+      and then 
+      <span style='color: {model_colors[\"Group ABC\"]}'> 
+        Group ABC
+      </span>
+      and finally 
+      <span style='color: {model_colors[\"Group XYZ\"]}'> 
+        Group XYZ
+      </span>"
+    ),
+    color = ""
+  ) +
+  scale_x_continuous(
+    labels = seq(16, 34, 2),
+    breaks = seq(16, 34, 2),
+    #########################################################################
+    # This is an extra x-axis label located above the plot, under the title #
+    #########################################################################
+    sec.axis = sec_axis(~.,
+      name = "Forecast starting X_AXIS",
+      breaks = seq(16, 34, 2),
+      labels = unique(forecast_all$yq)[c(TRUE, FALSE)]
+    #########################################################################
+    )
+  ) +
+  theme_bw() +
+  theme(
+    panel.grid.major.x = element_line(color = "gray", linewidth = 0.1),
+    panel.grid.minor.x = element_blank(),
+    panel.grid.minor.y = element_blank(),
+    plot.title = element_markdown()
+  ) +
+  scale_color_manual(values = model_colors) +
+  scale_linewidth_manual(values = c(0.5, 0.5, 1.5), guide = "none")
+```
