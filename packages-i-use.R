@@ -77,10 +77,7 @@ pak::pak(
     "rUM",
     "sjlabelled",
     "skimr",
-    "tidyREDCap",
-
-    'froggeR',
-    'nascaR.data'
+    "tidyREDCap"
 
   )
 )
