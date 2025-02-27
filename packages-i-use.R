@@ -1,5 +1,5 @@
 install.packages('tidyverse')
-if (!require("remotes")) install.packages("remotes")
+install.packages("remotes")
 
 remotes::install_cran(c('froggeR', 'nascaR.data'))
 remotes::install_github('hadley/emo')
