@@ -1,13 +1,17 @@
-install.packages('tidyverse')
+install.packages("tidyverse")
 install.packages("remotes")
 
-remotes::install_cran(c('froggeR', 'nascaR.data'))
-remotes::install_github('hadley/emo')
+remotes::install_cran(c("froggeR"))
+remotes::install_github(c(
+  "kyleGrealis/nascaR.data@weekly",
+  "hadley/emo"
+))
 
 remotes::install_cran("pak")
 
 # remotes::install_cran(
-pak::pak(
+# pak::pak(
+install.packages(
   c(
     "arrow",
     "BH",
@@ -18,6 +22,7 @@ pak::pak(
     # Shiny packages:
     "bslib",
     "shiny",
+    "shinyjs",
 
     # webscraping
     "applicable",
