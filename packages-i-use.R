@@ -1,5 +1,5 @@
-install.packages("tidyverse")
 install.packages("remotes")
+install.packages("tidyverse")
 
 remotes::install_cran(c("froggeR"))
 remotes::install_github(c(
