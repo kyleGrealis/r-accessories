@@ -1,12 +1,14 @@
-if (!require("remotes")) install.packages("remotes")
+install.packages("remotes")
+install.packages("tidyverse")
 
-remotes::install_github("hadley/emo")
-remotes::install_github("kyleGrealis/nascaR.data")
-remotes::install_github("kyleGrealis/froggeR")
+remotes::install_cran(c("froggeR"))
+remotes::install_github(c(
+  "kyleGrealis/nascaR.data@weekly",
+  "hadley/emo"
+))
 
-install.packages("pak")
+remotes::install_cran("pak")
 
-# remotes::install_cran(
 pak::pak(
   c(
     "arrow",
@@ -18,6 +20,7 @@ pak::pak(
     # Shiny packages:
     "bslib",
     "shiny",
+    "shinyjs",
 
     # webscraping
     "applicable",
@@ -29,11 +32,8 @@ pak::pak(
     "DALEX",
     "DALEXtra",
     "doParallel",
-    "gee",
-    "glmnet",
     "lme4",
     "ltm",
-    "LongituRF",
     "pins",
     "plumber",
     "pwr",
@@ -48,15 +48,17 @@ pak::pak(
     "extrafont",
     "flextable",
     "ggdist",
+    "gfonts",
     "ggiraph",
     "ggstatsplot",
     "ggthemes",
     "ggtext",
     "gtsummary",
     "kableExtra",
-    "mapproj",
-    "mapview",
+    "pandoc",
     "patchwork",
+    "reactable",
+    "reactablefmtr",
     "table1",
     "textrecipes",
     "vcd",
@@ -68,7 +70,6 @@ pak::pak(
     "devtools",
 
     # misc
-    "addinslist",
     "crsuggest",
     "janitor",
     "lorem",
