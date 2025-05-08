@@ -1,6 +1,8 @@
 if (!require("remotes")) install.packages("remotes")
 
-remotes::install_github('hadley/emo')
+remotes::install_github("hadley/emo")
+remotes::install_github("kyleGrealis/nascaR.data")
+remotes::install_github("kyleGrealis/froggeR")
 
 install.packages("pak")
 
@@ -23,6 +25,7 @@ pak::pak(
     # modeling / stats
     "tidymodels",
     "broom.mixed",
+    "bonsai",
     "DALEX",
     "DALEXtra",
     "doParallel",
@@ -41,8 +44,10 @@ pak::pak(
 
     # plotting / visuals / tables
     "DiagrammeR",
+    "echarts4r",
     "extrafont",
     "flextable",
+    "ggdist",
     "ggiraph",
     "ggstatsplot",
     "ggthemes",
@@ -75,11 +80,7 @@ pak::pak(
     "rUM",
     "sjlabelled",
     "skimr",
-    "tidyREDCap",
-
-    'froggeR',
-    'nascaR.data'
-
+    "tidyREDCap"
   )
 )
 
