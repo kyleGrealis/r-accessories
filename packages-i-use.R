@@ -4,7 +4,8 @@ install.packages("tidyverse")
 remotes::install_cran(c("froggeR"))
 remotes::install_github(c(
   "kyleGrealis/nascaR.data@weekly",
-  "hadley/emo"
+  "hadley/emo",
+  "hollyyfc/lme4u"
 ))
 
 remotes::install_cran("pak")
