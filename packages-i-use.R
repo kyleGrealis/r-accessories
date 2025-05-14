@@ -70,6 +70,7 @@ pak::pak(
     # for package development
     "available",
     "devtools",
+    "rhub",
 
     # misc
     "crsuggest",
@@ -80,6 +81,7 @@ pak::pak(
     "qpcR",
     "redcapAPI",
     "rio",
+    "RSQLite",
     "rUM",
     "sjlabelled",
     "skimr",
