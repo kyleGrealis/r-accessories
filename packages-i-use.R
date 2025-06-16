@@ -80,6 +80,7 @@ pak::pak(
     "quarto",
     "qpcR",
     "redcapAPI",
+    "redquck",
     "rio",
     "RSQLite",
     "rUM",
