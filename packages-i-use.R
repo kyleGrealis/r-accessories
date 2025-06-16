@@ -75,6 +75,7 @@ pak::pak(
     # misc
     "crsuggest",
     "janitor",
+    "keyring",
     "lorem",
     "palmerpenguins",
     "quarto",
