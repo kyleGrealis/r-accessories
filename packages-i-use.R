@@ -51,6 +51,7 @@ pak::pak(
     "flextable",
     "ggdist",
     "gfonts",
+    "ggfittext",
     "ggiraph",
     "ggstatsplot",
     "ggthemes",
