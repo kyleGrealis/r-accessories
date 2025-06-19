@@ -10,8 +10,7 @@ remotes::install_github(c(
 
 remotes::install_cran("pak")
 
-pak::pak(
-  # remotes::install_cran(
+install.packages(
   c(
     "arrow",
     "BH",
