@@ -10,8 +10,7 @@ remotes::install_github(c(
 
 remotes::install_cran("pak")
 
-pak::pak(
-  # remotes::install_cran(
+install.packages(
   c(
     "arrow",
     "BH",
@@ -51,6 +50,7 @@ pak::pak(
     "flextable",
     "ggdist",
     "gfonts",
+    "ggfittext",
     "ggiraph",
     "ggstatsplot",
     "ggthemes",
@@ -77,9 +77,11 @@ pak::pak(
     "janitor",
     "keyring",
     "lorem",
+    "mockery",
     "palmerpenguins",
     "quarto",
     "qpcR",
+    "qpdf",
     "redcapAPI",
     "redquck",
     "rio",
