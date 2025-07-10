@@ -117,12 +117,21 @@ theme_gt_compact <- function(tbl) {
 #' @return A modified gt table with included display options
 extras <- function(x) {
   x |>
-    add_overall() |>
+    add_overall(last = TRUE) |>
     add_p(
       test = list(
         all_continuous() ~ "t.test",
         all_categorical() ~ "chisq.test"
       ),
       pvalue_fun = ~ style_pvalue(.x, digits = 3)
-    )
+    ) |> 
+    bold_labels() |> 
+    modify_header(label ~ "") |>
+    # from above
+    clean_table()
 }
+
+
+# Misc table tweaks
+date <- Sys.Date() |> format("%B %d, %Y")
+subtitle <- glue("Processed: {date}")
