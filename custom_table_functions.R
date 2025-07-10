@@ -42,71 +42,38 @@ has_vals <- function(data, ...) {
 }
 
 
-#' Clean NA patterns in gtsummary tables
+#' Clean gtsummary table display
 #'
 #' @param tbl A gtsummary table object
 #' @return A modified gtsummary table object with cleaned display values
 #'
 #' @description
-#' Improves table readability by automatically detecting and replacing various
-#' NA patterns with a clean em-dash symbol. Works with any statistic format
-#' and gtsummary table type. The purpose is to remove visual noise from tables,
-#' especially where there are many missing values, making it easier to quickly
-#' identify and focus on the actual data.
+#' Improves table readability by:
+#' 1. Replacing "0 (NA%)" and "NA (NA)" with "--"
+#' 2. Only shows actual data, making it easier to spot real values
 #'
 #' @details
-#' This function uses a two-step process:
-#' 1. **Pattern Detection**: Uses regex to identify cells containing "NA" or "Inf"
-#'    patterns in statistic columns, regardless of the specific format
-#' 2. **Clean Replacement**: Leverages gtsummary's built-in `modify_missing_symbol()`
-#'    to replace detected patterns with "---"
-#'
-#' Common patterns detected include:
-#' - `"NA (NA)"` - missing mean/SD
-#' - `"0 (NA%)"` - zero counts with undefined percentages
-#' - `"NA [NA, NA]"` - missing median/quartiles
-#' - `"NA ± NA (range: Inf - Inf)"` - missing complex statistics
-#' - Any other combination containing "NA" or "Inf"
-#'
-#' The function specifically targets statistic columns and appropriate row types,
-#' leaving variable names and labels untouched.
+#' The function uses modify_table_body() to transform character columns in the table.
+#' It specifically targets two types of empty data representations:
+#' - "0 (NA%)" which appears when no events occurred but percentages can't be calculated
+#' - "NA (NA)" which appears for completely missing data
 #'
 #' @examples
-#' library(gtsummary)
-#'
-#' # Basic usage
-#' trial |>
+#' your_data |>
 #'   tbl_summary() |>
-#'   clean_gtsummary_nas()
-#'
-#' # Works with custom statistics
-#' trial |>
-#'   tbl_summary(
-#'     statistic = all_continuous() ~ "{mean} ± {sd} (range: {min} - {max})"
-#'   ) |>
-#'   clean_gtsummary_nas()
-#'
-#' @export
-clean_gtsummary_nas <- function(tbl) {
+#'   clean_table()
+clean_table <- function(tbl) {
   tbl |>
     modify_table_body(
       ~ .x |>
         mutate(across(
-          all_stat_cols(),
-          ~ {
-            # Detect any statistic containing "NA" or "Inf" using word boundaries
-            # \\b ensures we match complete words, avoiding false positives
-            na_pattern <- "\\bNA\\b|\\bInf\\b"
-            if_else(str_detect(., na_pattern), NA_character_, .)
-          }
+          where(is.character),
+          ~ ifelse(
+            . %in% c("0 (NA%)", "NA (NA)", "0 (0%)", "NA (NA, NA)", "NA, NA"),
+            "--",
+            .
+          )
         ))
-    ) |>
-    modify_missing_symbol(
-      symbol = "---",
-      columns = all_stat_cols(),
-      rows = 
-        (var_type %in% c("continuous", "dichotomous") & row_type == "label") |
-        (var_type %in% c("continuous2", "categorical") & row_type == "level")
     )
 }
 
@@ -141,5 +108,21 @@ theme_gt_compact <- function(tbl) {
       column_labels.font.weight = "bold",
       table.border.top.style = "hidden",
       table.border.bottom.style = "hidden"
+    )
+}
+
+#' Simplify adding gt table options
+#'
+#' @param x gt table object
+#' @return A modified gt table with included display options
+extras <- function(x) {
+  x |>
+    add_overall() |>
+    add_p(
+      test = list(
+        all_continuous() ~ "t.test",
+        all_categorical() ~ "chisq.test"
+      ),
+      pvalue_fun = ~ style_pvalue(.x, digits = 3)
     )
 }
