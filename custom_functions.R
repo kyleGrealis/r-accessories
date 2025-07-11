@@ -82,3 +82,45 @@ drop_label_kyle <- function(df, ...) {
 
   df
 }
+
+
+#' Modify tidyREDCap::make_yes_no() for only Yes or No, not Unknown
+#' @description
+#' The current make_yes_no() function includes a "Unknown" factor that is not always
+#' needed to display the tables. This will only include Yes or No
+#' 
+#' @param x The variable to mutate.
+#' @examples
+#' df |> mutate(x = yes_no(x))
+#' 
+#' @export
+yes_no <- function(x) {
+  # Grab the label before we mess with the data
+  original_label <- attr(x, "label")
+  
+  if (is.factor(x) | is.character(x)) {
+      result <- factor(case_when(
+          str_detect(x, stringr::regex("^yes", ignore_case = TRUE)) == TRUE ~ "Yes", 
+          str_detect(x, stringr::regex("^checked", ignore_case = TRUE)) == TRUE ~ "Yes", 
+          str_detect(x, stringr::regex("^no", ignore_case = TRUE)) == TRUE ~ "No", 
+          str_detect(x, stringr::regex("^unchecked", ignore_case = TRUE)) == TRUE ~ "No", 
+          TRUE ~ "No"
+      ), levels = c("No", "Yes"))
+  }
+  else if (is.numeric(x) | is.logical(x)) {
+      result <- factor(case_when(
+          x == 1 ~ "Yes", 
+          TRUE ~ "No"
+      ), levels = c("No", "Yes"))
+  }
+  else {
+      result <- x
+  }
+  
+  # Put the label back if we had one
+  if (!is.null(original_label)) {
+      attr(result, "label") <- original_label
+  }
+  
+  return(result)
+}

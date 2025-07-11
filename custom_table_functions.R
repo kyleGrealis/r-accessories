@@ -111,6 +111,21 @@ theme_gt_compact <- function(tbl) {
     )
 }
 
+
+#' Simplify adding gt table options without p-value
+#'
+#' @param x gt table object
+#' @return A modified gt table with included display options
+extras_no_p <- function(x) {
+  x |>
+    add_overall(last = TRUE) |>
+    bold_labels() |> 
+    modify_header(label ~ "") |>
+    # from above
+    clean_table()
+}
+
+
 #' Simplify adding gt table options
 #'
 #' @param x gt table object
@@ -120,7 +135,7 @@ extras <- function(x) {
     add_overall(last = TRUE) |>
     add_p(
       test = list(
-        all_continuous() ~ "t.test",
+        all_continuous() ~ "kruskal.test",
         all_categorical() ~ "chisq.test"
       ),
       pvalue_fun = ~ style_pvalue(.x, digits = 3)
