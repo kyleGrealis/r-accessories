@@ -147,6 +147,19 @@ extras <- function(x) {
 }
 
 
+#' Add group styling
+#' 
+#' @param x gtsummary table object
+group_styling  <- function(x) {
+  x |> 
+    modify_table_styling(
+      columns = label,
+      rows = row_type == 'variable_group',
+      text_format = c('bold', 'italic')
+      # text_format = 'bold'
+    )
+}
+
 # Misc table tweaks
 date <- Sys.Date() |> format("%B %d, %Y")
 subtitle <- glue("Processed: {date}")
