@@ -83,7 +83,7 @@ install.packages(
     "qpcR",
     "qpdf",
     "redcapAPI",
-    "redquck",
+    "redquack",
     "rio",
     "RSQLite",
     "rUM",
