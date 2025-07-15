@@ -3,7 +3,7 @@ install.packages("tidyverse")
 
 remotes::install_cran(c("froggeR"))
 remotes::install_github(c(
-  "kyleGrealis/nascaR.data@weekly",
+  "kyleGrealis/nascaR.data",
   "hadley/emo",
   "hollyyfc/lme4u"
 ))
