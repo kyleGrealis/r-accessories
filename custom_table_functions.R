@@ -1,165 +1,399 @@
-#' Filter dataset to timepoints with non-missing values
-#'
-#' @param data A data frame containing longitudinal data with a timepoint column
-#'   named 'redcap_event_name'
-#' @param ... One or more unquoted variable names to check for non-missing values
-#'
-#' @return A filtered and releveled data frame containing only timepoints where at least
-#'   one specified variable has non-missing values
-#'
-#' @description
-#' When analyzing longitudinal data, some variables may only be collected at specific
-#' timepoints, resulting in NA values at other times. This function helps identify and
-#' filter to only the relevant timepoints where data collection occurred. It's particularly
-#' useful when creating summary tables or visualizations that should only show timepoints
-#' with actual measurements.
-#'
-#' @details
-#' The function performs three operations:
-#' 1. Identifies timepoints where any specified variable has non-missing values
-#' 2. Filters the dataset to keep only those timepoints
-#' 3. Drops unused factor levels from the filtered dataset
-#'
-#' @examples
-#' # Filter to timepoints where either baseline or 6-month measurements exist
-#' data |>
-#'   has_vals(baseline_measure, month_6_measure)
-#'
-#' # Use directly in a pipeline before creating summary tables
-#' data |>
-#'   select(timepoint, survey_measure_1, survey_measure_2) |>
-#'   has_vals(survey_measure_1) |>
-#'   tbl_summary(by = timepoint)
-has_vals <- function(data, ...) {
-  timepoints <- data |>
-    filter(if_any(c(...), ~ !is.na(.))) |>
-    pull(redcap_event_name) |>
-    unique()
-
-  data |>
-    filter(redcap_event_name %in% timepoints) |>
-    droplevels()
-}
-
-
-#' Clean gtsummary table display
-#'
-#' @param tbl A gtsummary table object
-#' @return A modified gtsummary table object with cleaned display values
-#'
-#' @description
-#' Improves table readability by:
-#' 1. Replacing "0 (NA%)" and "NA (NA)" with "--"
-#' 2. Only shows actual data, making it easier to spot real values
-#'
-#' @details
-#' The function uses modify_table_body() to transform character columns in the table.
-#' It specifically targets two types of empty data representations:
-#' - "0 (NA%)" which appears when no events occurred but percentages can't be calculated
-#' - "NA (NA)" which appears for completely missing data
-#'
-#' @examples
-#' your_data |>
-#'   tbl_summary() |>
-#'   clean_table()
-clean_table <- function(tbl) {
-  tbl |>
-    modify_table_body(
-      ~ .x |>
-        mutate(across(
-          where(is.character),
-          ~ ifelse(
-            . %in% c("0 (NA%)", "NA (NA)", "0 (0%)", "NA (NA, NA)", "NA, NA"),
-            "--",
-            .
-          )
-        ))
-    )
-}
-
-
-#' Custom gt table theme
-#'
-#' @param tbl gt table object
-#' @return A modified gt table with adapted gtsummary::theme_gtsummary_compact theme
-#'
-#' @description
-#' Since the gt package does not have its own version of a compact theme, this has
-#' been adapted by running \code{theme_gtsummary_compact} in the console and
-#' using the provided output. This tries to keep consistent with the 'jama' theme.
-#'
-#' @examples
-#' your_data |>
-#'   gt() |>
-#'   theme_gt_compact()
-theme_gt_compact <- function(tbl) {
-  tbl |>
-    tab_options(
-      table.font.size = px(13),
-      data_row.padding = px(1),
-      summary_row.padding = px(1),
-      grand_summary_row.padding = px(1),
-      footnotes.padding = px(1),
-      source_notes.padding = px(1),
-      row_group.padding = px(1),
-      # Add other styling from the JAMA theme
-      # heading.background.color = "#f8f9fa",
-      heading.title.font.weight = "bold",
-      column_labels.font.weight = "bold",
-      table.border.top.style = "hidden",
-      table.border.bottom.style = "hidden"
-    )
-}
-
-
-#' Simplify adding gt table options without p-value
-#'
-#' @param x gt table object
-#' @return A modified gt table with included display options
-extras_no_p <- function(x) {
-  x |>
-    add_overall(last = TRUE) |>
-    bold_labels() |> 
-    modify_header(label ~ "") |>
-    # from above
-    clean_table()
-}
-
-
-#' Simplify adding gt table options
-#'
-#' @param x gt table object
-#' @return A modified gt table with included display options
-extras <- function(x) {
-  x |>
-    add_overall(last = TRUE) |>
-    add_p(
-      test = list(
-        all_continuous() ~ "kruskal.test",
-        all_categorical() ~ "chisq.test"
-      ),
-      pvalue_fun = ~ style_pvalue(.x, digits = 3)
-    ) |> 
-    bold_labels() |> 
-    modify_header(label ~ "") |>
-    # from above
-    clean_table()
-}
-
-
-#' Add group styling
-#' 
-#' @param x gtsummary table object
-group_styling  <- function(x) {
-  x |> 
-    modify_table_styling(
-      columns = label,
-      rows = row_type == 'variable_group',
-      text_format = c('bold', 'italic')
-      # text_format = 'bold'
-    )
-}
+# Set the gtsummary theme
+suppressMessages(
+  set_gtsummary_theme(
+    theme_gtsummary_compact("jama")
+  )
+)
 
 # Misc table tweaks
 date <- Sys.Date() |> format("%B %d, %Y")
 subtitle <- glue("Processed: {date}")
+
+#' Clean and standardize missing value display in gtsummary tables
+#'
+#' @description Improves table readability by replacing various missing value 
+#'   representations with a consistent "--" symbol. This makes it easier to 
+#'   distinguish between actual data and missing/undefined values in summary 
+#'   tables, creating a cleaner and more professional appearance.
+#'
+#' @param tbl A gtsummary table object (e.g., from `tbl_summary()`, `tbl_regression()`)
+#'
+#' @returns A gtsummary table object with standardized missing value display
+#'
+#' @details The function uses `gtsummary::modify_table_body()` to transform 
+#'   character columns and replace common missing value patterns with "--":
+#'   * `"0 (NA%)"` - No events occurred and percentages cannot be calculated
+#'   * `"NA (NA)"` - Completely missing data for both count and percentage
+#'   * `"0 (0%)"` - Zero counts with zero percentage
+#'   * `"NA (NA, NA)"` - Missing data with confidence intervals
+#'   * `"NA, NA"` - Missing paired values (e.g., median and IQR)
+#'   
+#'   This standardization makes tables more scannable and reduces visual clutter
+#'   from various "empty" data representations.
+#'
+#' @examples
+#' # Basic usage - clean missing values in summary table
+#' trial |> 
+#'   tbl_summary(by = trt) |> 
+#'   clean_table()
+#'   
+#' # Often used as part of a styling pipeline
+#' trial |> 
+#'   tbl_summary(by = trt) |> 
+#'   add_auto_labels() |> 
+#'   extras() |> 
+#'   clean_table()
+#'   
+#' # Works with regression tables too
+#' lm(age ~ trt + grade, data = trial) |> 
+#'   tbl_regression() |> 
+#'   clean_table()
+#'
+#' @seealso 
+#' * [gtsummary::modify_table_body()] for general table body modifications
+#' * [extras()] which includes `clean_table()` in its styling pipeline
+#'
+#' @export
+clean_table <- function(tbl) {
+ tbl |>
+   gtsummary::modify_table_body(
+     ~ .x |>
+       dplyr::mutate(dplyr::across(
+         dplyr::where(is.character),
+         ~ dplyr::if_else(
+           . %in% c("0 (NA%)", "NA (NA)", "0 (0%)", "NA (NA, NA)", "NA, NA"),
+           "--",
+           .
+         )
+       ))
+   )
+}
+
+
+#' Apply compact JAMA-style theme to gt tables
+#'
+#' @description Applies a compact table theme to gt tables that matches the 
+#'   'jama' theme from gtsummary. This ensures visual consistency when mixing 
+#'   gtsummary tables (using `theme_gtsummary_compact("jama")`) with regular 
+#'   gt tables in the same document. The theme reduces padding, adjusts font 
+#'   sizes, and applies JAMA journal styling conventions.
+#'
+#' @param tbl A gt table object created with `gt::gt()`
+#'
+#' @returns A gt table object with compact JAMA-style formatting applied
+#'
+#' @details This function replicates the visual appearance of 
+#'   `gtsummary::theme_gtsummary_compact("jama")` for use with regular gt tables.
+#'   Key styling includes:
+#'   * Reduced font size (13px) for compact appearance
+#'   * Minimal padding (1px) on all row types
+#'   * Bold column headers and table titles
+#'   * Hidden top and bottom table borders
+#'   * Consistent spacing that matches JAMA journal standards
+#'
+#' @examples
+#' # Basic usage with a data frame
+#' mtcars |> 
+#'   head() |> 
+#'   gt::gt() |> 
+#'   theme_gt_compact()
+#'   
+#' # Combine with other gt functions
+#' mtcars |> 
+#'   head() |> 
+#'   gt::gt() |> 
+#'   gt::tab_header(title = "Vehicle Data") |> 
+#'   theme_gt_compact()
+#'   
+#' # Use alongside gtsummary tables for consistency
+#' # Set gtsummary theme first
+#' gtsummary::set_gtsummary_theme(gtsummary::theme_gtsummary_compact("jama"))
+#' 
+#' # Then both tables will have matching appearance
+#' summary_table <- trial |> gtsummary::tbl_summary()
+#' data_table <- trial |> head() |> gt::gt() |> theme_gt_compact()
+#'
+#' @seealso 
+#' * [gtsummary::theme_gtsummary_compact()] for gtsummary table themes
+#' * [gtsummary::set_gtsummary_theme()] for setting global gtsummary themes
+#' * [gt::tab_options()] for additional gt table styling options
+#'
+#' @export
+theme_gt_compact <- function(tbl) {
+ tbl |>
+   gt::tab_options(
+     table.font.size = gt::px(13),
+     data_row.padding = gt::px(1),
+     summary_row.padding = gt::px(1),
+     grand_summary_row.padding = gt::px(1),
+     footnotes.padding = gt::px(1),
+     source_notes.padding = gt::px(1),
+     row_group.padding = gt::px(1),
+     heading.title.font.weight = "bold",
+     column_labels.font.weight = "bold",
+     table.border.top.style = "hidden",
+     table.border.bottom.style = "hidden"
+   )
+}
+
+
+#' Add standard styling and formatting to gtsummary tables
+#'
+#' @description Applies a consistent set of formatting options to gtsummary tables
+#'   including overall column, bold labels, clean headers, and optional p-values.
+#'   Streamlines the common workflow of adding multiple formatting functions.
+#'
+#' @param tbl A gtsummary table object (e.g., from `tbl_summary()`, `tbl_regression()`)
+#' @param pval Logical indicating whether to add p-values. Default is `TRUE`.
+#'   When `TRUE`, adds Kruskal-Wallis tests for continuous variables and 
+#'   chi-square tests for categorical variables.
+#'
+#' @returns A gtsummary table object with standard formatting applied
+#'
+#' @details The function applies the following modifications:
+#' * Adds an "Overall" column as the last column
+#' * Bolds variable labels for emphasis
+#' * Removes the "Characteristic" header label
+#' * Applies `clean_table()` styling
+#' * Optionally adds p-values with appropriate statistical tests
+#'
+#' @examples
+#' # With p-values (default)
+#' trial |> 
+#'   tbl_summary(by = trt) |> 
+#'   extras()
+#'   
+#' # Without p-values
+#' trial |> 
+#'   tbl_summary(by = trt) |> 
+#'   extras(pval = FALSE)
+#'   
+#' # Chain with other functions
+#' trial |> 
+#'   tbl_summary(by = trt) |> 
+#'   add_auto_labels() |> 
+#'   extras(pval = TRUE) |> 
+#'   group_styling()
+#'
+#' @seealso 
+#' * [gtsummary::add_overall()] for adding overall columns
+#' * [gtsummary::add_p()] for adding p-values
+#' * [clean_table()] for additional table styling
+#'
+#' @export
+extras <- function(tbl, pval = TRUE) {
+  result <- tbl |>
+    gtsummary::add_overall(last = TRUE) |>
+    gtsummary::bold_labels() |> 
+    gtsummary::modify_header(label ~ "")
+  
+  if (pval) {
+    result <- result |> 
+      gtsummary::add_p(
+        test = list(
+          gtsummary::all_continuous() ~ "kruskal.test",
+          gtsummary::all_categorical() ~ "chisq.test"
+        ),
+        pvalue_fun = ~ gtsummary::style_pvalue(.x, digits = 3)
+      )
+  }
+  
+  result |> clean_table()
+}
+
+
+#' Apply styling to variable group headers in gtsummary tables
+#' 
+#' @description Adds customizable formatting to variable group headers in 
+#'   gtsummary tables. Variable groups are created when using functions like 
+#'   `tbl_strata()` or when variables are organized into sections. This function 
+#'   enhances table readability by making group headers visually distinct from 
+#'   individual variable labels.
+#' 
+#' @param tbl A gtsummary table object (e.g., from `tbl_summary()`, `tbl_regression()`)
+#' @param format Character vector specifying text formatting. Options include 
+#'   `"bold"`, `"italic"`, or both. Default is `c("bold", "italic")`.
+#' 
+#' @returns A gtsummary table object with specified formatting applied to 
+#'   variable group headers
+#' 
+#' @details The function targets rows where `row_type == 'variable_group'` and 
+#'   applies the specified text formatting to the label column. This is 
+#'   particularly useful for tables with multiple sections or stratified analyses 
+#'   where clear visual hierarchy improves interpretation.
+#' 
+#' @examples
+#' # Default formatting (bold and italic)
+#' trial |> 
+#'   tbl_summary(by = trt) |> 
+#'   group_styling()
+#'   
+#' # Bold only
+#' trial |> 
+#'   tbl_summary(by = trt) |> 
+#'   group_styling(format = "bold")
+#'   
+#' # Italic only
+#' trial |> 
+#'   tbl_summary(by = trt) |> 
+#'   group_styling(format = "italic")
+#'   
+#' # Useful with stratified tables
+#' trial |> 
+#'   tbl_strata(
+#'     strata = grade,
+#'     .tbl_fun = ~ .x |> tbl_summary(by = trt)
+#'   ) |> 
+#'   group_styling(format = "bold")
+#' 
+#' @seealso 
+#' * [gtsummary::modify_table_styling()] for general table styling options
+#' * [gtsummary::tbl_strata()] for creating stratified tables with groups
+#' 
+#' @export
+group_styling <- function(tbl, format = c('bold', 'italic')) {
+  tbl |> 
+    gtsummary::modify_table_styling(
+      columns = label,
+      rows = row_type == 'variable_group',
+      text_format = format
+    )
+}
+
+
+#' Create a list of variable labels from a dataset using a dictionary
+#' 
+#' @description Creates a list of formula objects for variable labeling compatible with 
+#'   `gtsummary::tbl_summary()`. Matches dataset variable names against a dictionary 
+#'   tibble to generate labels. Requires a global `dictionary` object with `Variable` 
+#'   and `Description` columns. Can be used standalone or internally by `add_auto_labels()`.
+#' 
+#' @param data A data frame or tibble containing variables to be labeled
+#' 
+#' @returns A list of formula objects in the format `variable ~ "Description"` 
+#'   suitable for use in `gtsummary::tbl_summary(label = )`
+#' 
+#' @details The function requires a `dictionary` object in the global environment 
+#'   structured as a tibble with columns:
+#'   - `Variable`: Character column with exact variable names from datasets
+#'   - `Description`: Character column with human-readable labels
+#'   
+#'   Only variables present in both the input data and dictionary will be included 
+#'   in the output. Missing variables are silently ignored.
+#' 
+#' @examples
+#' # Create required dictionary first
+#' dictionary <- tibble::tribble(
+#'   ~Variable, ~Description,
+#'   'record_id', 'Participant ID',
+#'   'age', 'Age at enrollment',
+#'   'sex', 'Biological sex'
+#' )
+#' 
+#' # Generate labels for a dataset
+#' my_labels <- create_labels(study_data)
+#' 
+#' # Use directly in tbl_summary
+#' study_data |> 
+#'   tbl_summary(label = create_labels(study_data))
+#'   
+#' @seealso [add_auto_labels()] for automatic application to existing tbl_summary objects
+#' 
+#' @export
+create_labels <- function(data) {
+ # Extract variable names from the input dataset
+ variables <- names(data)
+
+ # Filter dictionary to only include variables present in the dataset
+ # This prevents errors from dictionary entries not in the current data
+ filtered_dict <- dictionary |> 
+   filter(Variable %in% variables)
+ 
+ # Create list of formulas using map2 for pairwise iteration
+ # Format: variable ~ "Description" as required by gtsummary::tbl_summary()
+ labels_list <- purrr::map2(
+   filtered_dict$Variable,
+   filtered_dict$Description,
+   ~as.formula(paste(.x, '~', shQuote(.y)))
+ )
+
+ return(labels_list)
+}
+
+
+#' Add automatic labels from dictionary to a tbl_summary object
+#' @description Pipe a `gtsummary::tbl_summary` object to automatically add variable 
+#'   labels from a dictionary tibble. Preserves any manual label overrides specified 
+#'   in the original `tbl_summary()` call while adding dictionary labels for unlabeled 
+#'   variables. Requires a `dictionary` object with `Variable` and `Description` columns.
+#'   See `create_labels()` function for dictionary format requirements.
+#' 
+#' @param tbl A gtsummary table object created by `tbl_summary()`
+#' 
+#' @returns A gtsummary table object with automatic labels applied
+#' 
+#' @examples
+#' # Basic usage - adds dictionary labels to all variables
+#' table1_data |> 
+#'   tbl_summary(by = diagnosis) |> 
+#'   add_auto_labels()
+#'   
+#' # Preserves manual overrides while adding dictionary labels for the rest
+#' table1_data |> 
+#'   tbl_summary(by = diagnosis, label = c(age ~ "Patient Age")) |> 
+#'   add_auto_labels()  # 'age' stays "Patient Age", others get dictionary labels
+#'   
+#' @seealso [create_labels()] for dictionary requirements
+#' 
+#' @export
+add_auto_labels <- function(tbl) {
+ # Extract the original dataset from the tbl_summary object
+ # This data is stored in tbl$inputs$data and contains all variables used in the table
+ original_data <- tbl$inputs$data
+ 
+ # Generate automatic labels from the dictionary using create_labels()
+ # Returns a list of formulas: list(variable ~ "Description from dictionary")
+ auto_labels_list <- create_labels(original_data)
+
+ # Extract any existing & overriding labels that were manually specified in tbl_summary()
+ # Note: tbl_summary stores these as a named list: list(variable = "Custom Label")
+ # The %||% operator means "use this, or if NULL use list()"
+ override_labels <- tbl$inputs$label %||% list()
+
+ if (length(override_labels) > 0) {
+   # Convert override named list format to formula format for consistency
+   # imap gives both value (.x = "Custom Label") and name (.y = "variable")
+   # Result: list(variable ~ "Custom Label") matching auto_labels format
+   existing_formulas <- purrr::imap(override_labels, ~ {
+     as.formula(paste(.y, '~', shQuote(.x)))
+   })
+   
+   # Extract variable names from the override custom labels
+   # These variables should NOT be overwritten by dictionary labels
+   existing_vars <- names(override_labels)
+   
+   # Extract variable names from the auto-generated dictionary labels
+   # all.vars(.x)[1] gets the left-hand side variable name from each formula
+   auto_vars <- purrr::map_chr(auto_labels_list, ~ all.vars(.x)[1])
+   
+   # Filter auto_labels to exclude any variables that have custom labels
+   # This preserves manual overrides while adding dictionary labels for the rest
+   keep_auto <- !auto_vars %in% existing_vars
+   auto_labels_filtered <- auto_labels_list[keep_auto]
+   
+   # Combine custom labels (priority) with non-conflicting dictionary labels
+   # Order matters: existing_formulas come first to maintain precedence
+   combined_labels <- c(existing_formulas, auto_labels_filtered)
+ } else {
+   # No existing override custom labels found, use all dictionary labels
+   combined_labels <- auto_labels_list
+ }
+ 
+ # Reconstruct the tbl_summary with the combined label set
+ # Preserve all original arguments (data, by, missing, etc.) from tbl$inputs
+ args <- tbl$inputs
+ args$label <- combined_labels
+ 
+ # Rebuild and return the table with automatic + custom labels applied
+ do.call(tbl_summary, args)
+}

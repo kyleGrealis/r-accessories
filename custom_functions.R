@@ -1,126 +1,124 @@
-#' Find a variable in a dataset
-#' @description Easily find which dataset(s) a variable name is in.
-#' @param var_name The variable to find
+#' Find a variable across all data frames in the global environment
+#' 
+#' @description Searches through all data frame objects in the global environment
+#'   to identify which datasets contain a specified variable name. Useful for 
+#'   exploratory data analysis when working with multiple datasets and trying
+#'   to locate where specific variables are stored.
+#' 
+#' @param var_name Character string specifying the variable name to search for
+#' 
+#' @returns A character vector of dataset names containing the variable, or an 
+#'   informative message if the variable is not found in any dataset
+#' 
+#' @details The function examines all objects in the global environment, filters
+#'   for data frame objects, and checks if the specified variable exists in each
+#'   dataset's column names. The search is case-sensitive and looks for exact
+#'   variable name matches.
+#' 
 #' @examples
+#' # Create some example datasets
+#' df1 <- data.frame(record_id = 1:5, age = 20:24)
+#' df2 <- data.frame(participant_id = 1:3, record_id = 1:3, sex = c("M", "F", "M"))
+#' 
+#' # Find which datasets contain 'record_id'
 #' find_variable('record_id')
+#' # Returns: c("df1", "df2")
+#' 
+#' # Search for a variable that doesn't exist
+#' find_variable('height')
+#' # Returns: "Variable 'height' not found in any dataset"
+#' 
+#' @export
 find_variable <- function(var_name) {
-  # Get all objects in the environment
-  all_objects <- ls(envir = .GlobalEnv)
+ # Get all objects in the global environment
+ all_objects <- ls(envir = .GlobalEnv)
 
-  # Create a vector to store results
-  found_in <- character(0)
+ # Create a vector to store results
+ found_in <- character(0)
 
-  # Loop through objects and check their names
-  for (obj_name in all_objects) {
-    # Skip the function itself
-    if (obj_name == "find_variable") {
-      next
-    }
+ # Loop through objects and check their names
+ for (obj_name in all_objects) {
+   # Skip the function itself to avoid self-reference
+   if (obj_name == "find_variable") {
+     next
+   }
 
-    # Get the object
-    obj <- get(obj_name, envir = .GlobalEnv)
+   # Get the object from global environment
+   obj <- get(obj_name, envir = .GlobalEnv)
 
-    # Check if it's a data frame and contains the variable
-    if (is.data.frame(obj) && var_name %in% names(obj)) {
-      found_in <- c(found_in, obj_name)
-    }
-  }
+   # Check if it's a data frame and contains the target variable
+   if (is.data.frame(obj) && var_name %in% names(obj)) {
+     found_in <- c(found_in, obj_name)
+   }
+ }
 
-  # Return results
-  if (length(found_in) == 0) {
-    return(paste0("Variable '", var_name, "' not found in any dataset"))
-  } else {
-    return(found_in)
-  }
+ # Return results with informative message if not found
+ if (length(found_in) == 0) {
+   return(paste0("Variable '", var_name, "' not found in any dataset"))
+ } else {
+   return(found_in)
+ }
 }
-#' @noRd
 
-#' Custom janitor::tabyl to stratify by site
-#' @param var Variable of interest
-a_tabyl <- function(dataset, var) {
-  janitor::tabyl(dataset, {{ var }}, the_site)
-}
-#' @noRd
 
-#' Drop the label from one or more variables
-#' @description There is a reported issue with joins on data (without a reprex)
-#' that seem to be caused by the labels. As a possible solution this can be
-#' used to drop labels from one or more variables.
+#' Drop labels from selected variables in a data frame
+#' 
+#' @description Removes variable labels (attributes) from specified columns in a 
+#'   data frame. This function addresses reported issues with data joins where
+#'   variable labels can cause conflicts. Supports flexible variable selection
+#'   using tidyselect syntax including helper functions and direct column names.
+#'   
+#'   Note: This is an adaptation of functionality being proposed for integration
+#'   into the tidyREDCap package.
 #'
-#' @param df the name of the data frame
-#' @param ... Variable selection using tidyselect helpers (e.g., contains(),
-#' starts_with()) or column names as symbols or strings
+#' @param df A data frame containing labeled variables
+#' @param ... Variable selection using tidyselect helpers (e.g., `contains()`,
+#'   `starts_with()`) or column names as symbols or strings
+#'
+#' @returns The input data frame with labels (attributes) removed from selected variables
+#'
+#' @details The function uses `tidyselect::eval_select()` to support flexible
+#'   variable selection patterns. It removes all attributes from selected columns,
+#'   which includes variable labels but also other metadata. Use with caution if
+#'   you need to preserve specific attributes other than labels.
 #'
 #' @examples
-#' \{dontrun
+#' \dontrun{
 #' # Remove labels from a single variable
-#' df |> drop_label(employment)
+#' labeled_data |> drop_label_kyle(employment)
 #'
-#' # Remove labels from multiple variables
-#' df |> drop_label(employment, marital_status)
+#' # Remove labels from multiple specific variables
+#' labeled_data |> drop_label_kyle(employment, marital_status, income)
 #'
-#' # Remove all demograhic labels using tidyselect helpers
-#' df |> drop_label(starts_with("dem_"))
+#' # Remove all demographic labels using tidyselect helpers
+#' labeled_data |> drop_label_kyle(starts_with("dem_"))
+#' 
+#' # Remove labels from variables containing specific text
+#' labeled_data |> drop_label_kyle(contains("score"))
+#' 
+#' # Chain with other data processing steps
+#' study_data |> 
+#'   drop_label_kyle(starts_with("baseline_")) |>
+#'   left_join(lookup_table, by = "participant_id")
 #' }
 #'
-#' @export
+#' @seealso 
+#' * [tidyselect::eval_select()] for variable selection syntax
+#' * [attributes()] for information about R object attributes
 #'
-#' @return df with labels removed from selected variables
-drop_label_kyle <- function(df, ...) {
-  # Capture the variables using tidyselect
-  vars_idx <- tidyselect::eval_select(rlang::expr(c(...)), df)
-
-  # If no variables selected, return the dataframe as is
-  if (length(vars_idx) == 0) {
-    return(df)
-  }
-
-  # For each selected column, remove its attributes
-  for (col_idx in vars_idx) {
-    attributes(df[[col_idx]]) <- NULL
-  }
-
-  df
-}
-
-
-#' Modify tidyREDCap::make_yes_no() for only Yes or No, not Unknown
-#' @description
-#' The current make_yes_no() function includes a "Unknown" factor that is not always
-#' needed to display the tables. This will only include Yes or No
-#' 
-#' @param x The variable to mutate.
-#' @examples
-#' df |> mutate(x = yes_no(x))
-#' 
 #' @export
-yes_no <- function(x) {
-  # Grab the label before we mess with the data
-  original_label <- attr(x, "label")
-  
-  if (is.factor(x) | is.character(x)) {
-      result <- factor(case_when(
-          str_detect(x, stringr::regex("^yes", ignore_case = TRUE)) == TRUE ~ "Yes", 
-          str_detect(x, stringr::regex("^checked", ignore_case = TRUE)) == TRUE ~ "Yes", 
-          str_detect(x, stringr::regex("^no", ignore_case = TRUE)) == TRUE ~ "No", 
-          str_detect(x, stringr::regex("^unchecked", ignore_case = TRUE)) == TRUE ~ "No", 
-          TRUE ~ "No"
-      ), levels = c("No", "Yes"))
-  }
-  else if (is.numeric(x) | is.logical(x)) {
-      result <- factor(case_when(
-          x == 1 ~ "Yes", 
-          TRUE ~ "No"
-      ), levels = c("No", "Yes"))
-  }
-  else {
-      result <- x
-  }
-  
-  # Put the label back if we had one
-  if (!is.null(original_label)) {
-      attr(result, "label") <- original_label
-  }
-  
-  return(result)
+drop_label_kyle <- function(df, ...) {
+ # Capture the variables using tidyselect for flexible selection
+ vars_idx <- tidyselect::eval_select(rlang::expr(c(...)), df)
+
+ # If no variables selected, return the dataframe unchanged
+ if (length(vars_idx) == 0) return(df)
+
+ # Remove all attributes from each selected column
+ # This eliminates labels while preserving the underlying data
+ for (col_idx in vars_idx) {
+   attributes(df[[col_idx]]) <- NULL
+ }
+
+ return(df)
 }
