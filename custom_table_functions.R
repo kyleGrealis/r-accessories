@@ -301,23 +301,23 @@ group_styling <- function(tbl, format = c('bold', 'italic')) {
 #' 
 #' @export
 create_labels <- function(data) {
- # Extract variable names from the input dataset
- variables <- names(data)
+  # Extract variable names from the input dataset
+  variables <- names(data)
 
- # Filter dictionary to only include variables present in the dataset
- # This prevents errors from dictionary entries not in the current data
- filtered_dict <- dictionary |> 
-   filter(Variable %in% variables)
- 
- # Create list of formulas using map2 for pairwise iteration
- # Format: variable ~ "Description" as required by gtsummary::tbl_summary()
- labels_list <- purrr::map2(
-   filtered_dict$Variable,
-   filtered_dict$Description,
-   ~as.formula(paste(.x, '~', shQuote(.y)))
- )
+  # Filter dictionary to only include variables present in the dataset
+  # This prevents errors from dictionary entries not in the current data
+  filtered_dict <- dictionary |> 
+    filter(Variable %in% variables)
+  
+  # Create list of formulas using map2 for pairwise iteration
+  # Format: variable ~ "Description" as required by gtsummary::tbl_summary()
+  labels_list <- purrr::map2(
+    filtered_dict$Variable,
+    filtered_dict$Description,
+    ~as.formula(paste(.x, '~', shQuote(.y)))
+  )
 
- return(labels_list)
+  return(labels_list)
 }
 
 
@@ -347,53 +347,82 @@ create_labels <- function(data) {
 #' 
 #' @export
 add_auto_labels <- function(tbl) {
- # Extract the original dataset from the tbl_summary object
- # This data is stored in tbl$inputs$data and contains all variables used in the table
- original_data <- tbl$inputs$data
- 
- # Generate automatic labels from the dictionary using create_labels()
- # Returns a list of formulas: list(variable ~ "Description from dictionary")
- auto_labels_list <- create_labels(original_data)
-
- # Extract any existing & overriding labels that were manually specified in tbl_summary()
- # Note: tbl_summary stores these as a named list: list(variable = "Custom Label")
- # The %||% operator means "use this, or if NULL use list()"
- override_labels <- tbl$inputs$label %||% list()
-
- if (length(override_labels) > 0) {
-   # Convert override named list format to formula format for consistency
-   # imap gives both value (.x = "Custom Label") and name (.y = "variable")
-   # Result: list(variable ~ "Custom Label") matching auto_labels format
-   existing_formulas <- purrr::imap(override_labels, ~ {
-     as.formula(paste(.y, '~', shQuote(.x)))
-   })
-   
-   # Extract variable names from the override custom labels
-   # These variables should NOT be overwritten by dictionary labels
-   existing_vars <- names(override_labels)
-   
-   # Extract variable names from the auto-generated dictionary labels
-   # all.vars(.x)[1] gets the left-hand side variable name from each formula
-   auto_vars <- purrr::map_chr(auto_labels_list, ~ all.vars(.x)[1])
-   
-   # Filter auto_labels to exclude any variables that have custom labels
-   # This preserves manual overrides while adding dictionary labels for the rest
-   keep_auto <- !auto_vars %in% existing_vars
-   auto_labels_filtered <- auto_labels_list[keep_auto]
-   
-   # Combine custom labels (priority) with non-conflicting dictionary labels
-   # Order matters: existing_formulas come first to maintain precedence
-   combined_labels <- c(existing_formulas, auto_labels_filtered)
- } else {
-   # No existing override custom labels found, use all dictionary labels
-   combined_labels <- auto_labels_list
- }
- 
- # Reconstruct the tbl_summary with the combined label set
- # Preserve all original arguments (data, by, missing, etc.) from tbl$inputs
- args <- tbl$inputs
- args$label <- combined_labels
- 
- # Rebuild and return the table with automatic + custom labels applied
- do.call(tbl_summary, args)
+  # Extract the original dataset from the table object
+  # This data is stored in tbl$inputs$data and contains all variables used in the table
+  original_data <- tbl$inputs$data
+  
+  # Check if this is a survey table by looking at the table class, not just the data
+  # Detects tbl_svysummary objects or survey design data to call the correct reconstruction function
+  is_survey_table <- inherits(tbl, "tbl_svysummary") || 
+                      any(grepl("svy", class(tbl))) ||
+                      inherits(original_data, "survey.design")
+  
+  # For survey objects, extract the data frame from the design
+  # Survey designs store actual data in $variables component
+  if (inherits(original_data, "survey.design")) {
+    data_for_labels <- original_data$variables
+  } else {
+    data_for_labels <- original_data
+  }
+  
+  # Get the variables that are actually included in the table
+  # Only label variables that were specified in the include argument to avoid errors
+  included_vars <- tbl$inputs$include %||% names(data_for_labels)
+  
+  # Generate automatic labels from the dictionary using create_labels()
+  # Returns a list of formulas: list(variable ~ "Description from dictionary")
+  auto_labels_list <- create_labels(data_for_labels)
+  
+  # Filter auto labels to only include variables in the table
+  # Extract variable names from formulas and keep only those in the current table
+  auto_vars <- purrr::map_chr(auto_labels_list, ~ all.vars(.x)[1])
+  keep_vars <- auto_vars %in% included_vars
+  auto_labels_filtered <- auto_labels_list[keep_vars]
+  
+  # Extract any existing & overriding labels that were manually specified in tbl_summary()
+  # Note: tbl_summary stores these as a named list: list(variable = "Custom Label")
+  # The %||% operator means "use this, or if NULL use list()"
+  override_labels <- tbl$inputs$label %||% list()
+  
+  if (length(override_labels) > 0) {
+    # Convert override named list format to formula format for consistency
+    # imap gives both value (.x = "Custom Label") and name (.y = "variable")
+    # Result: list(variable ~ "Custom Label") matching auto_labels format
+    existing_formulas <- purrr::imap(override_labels, ~ {
+      as.formula(paste(.y, '~', shQuote(.x)))
+    })
+    
+    # Extract variable names from the override custom labels
+    # These variables should NOT be overwritten by dictionary labels
+    existing_vars <- names(override_labels)
+    
+    # Extract variable names from the filtered auto-generated dictionary labels
+    # all.vars(.x)[1] gets the left-hand side variable name from each formula
+    filtered_auto_vars <- purrr::map_chr(auto_labels_filtered, ~ all.vars(.x)[1])
+    
+    # Filter auto_labels to exclude any variables that have custom labels
+    # This preserves manual overrides while adding dictionary labels for the rest
+    keep_auto <- !filtered_auto_vars %in% existing_vars
+    final_auto_labels <- auto_labels_filtered[keep_auto]
+    
+    # Combine custom labels (priority) with non-conflicting dictionary labels
+    # Order matters: existing_formulas come first to maintain precedence
+    combined_labels <- c(existing_formulas, final_auto_labels)
+  } else {
+    # No existing override custom labels found, use all filtered dictionary labels
+    combined_labels <- auto_labels_filtered
+  }
+  
+  # Reconstruct the table with the combined label set
+  # Preserve all original arguments (data, by, missing, etc.) from tbl$inputs
+  args <- tbl$inputs
+  args$label <- combined_labels
+  
+  # Rebuild and return the table with automatic + custom labels applied
+  # Use the survey detection to call the right function (tbl_svysummary vs tbl_summary)
+  if (is_survey_table) {
+    do.call(tbl_svysummary, args)
+  } else {
+    do.call(tbl_summary, args)
+  }
 }
