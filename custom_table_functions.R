@@ -55,18 +55,23 @@ subtitle <- glue("Processed: {date}")
 #'
 #' @export
 clean_table <- function(tbl) {
- tbl |>
-   gtsummary::modify_table_body(
-     ~ .x |>
-       dplyr::mutate(dplyr::across(
-         dplyr::where(is.character),
-         ~ dplyr::if_else(
-           . %in% c("0 (NA%)", "NA (NA)", "0 (0%)", "NA (NA, NA)", "NA, NA"),
-           "--",
-           .
-         )
-       ))
-   )
+  tbl |>
+    modify_table_body(
+      ~ .x |> 
+        mutate(across(all_stat_cols(), ~ {
+          # Detect any statistic containing "NA" or "Inf" using word boundaries
+          # \\b ensures to match complete words, avoiding false positives
+          na_pattern <- "\\bNA\\b|\\bInf\\b"
+          if_else(str_detect(., na_pattern), NA_character_, .)
+        }))
+    ) |> 
+    modify_missing_symbol(
+      symbol = "---",
+      columns = all_stat_cols(),
+      rows = 
+        (var_type %in% c("continuous", "dichotomous") & row_type == "label") |
+        (var_type %in% c("continuous2", "categorical") & row_type == "level")
+    )
 }
 
 
