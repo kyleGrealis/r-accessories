@@ -5,7 +5,8 @@ remotes::install_cran(c("froggeR"))
 remotes::install_github(c(
   "kyleGrealis/nascaR.data",
   "hadley/emo",
-  "hollyyfc/lme4u"
+  "hollyyfc/lme4u",
+  "e-mitchell/meps_r_pkg/MEPS"
 ))
 
 remotes::install_cran("pak")
@@ -80,7 +81,9 @@ install.packages(
     "keyring",
     "lorem",
     "mockery",
+    "nhanesA",
     "palmerpenguins",
+    "propensity",
     "quarto",
     "qpcR",
     "qpdf",
