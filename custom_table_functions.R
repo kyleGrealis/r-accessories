@@ -61,7 +61,7 @@ clean_table <- function(tbl) {
         mutate(across(all_stat_cols(), ~ {
           # Detect any statistic containing "NA" or "Inf" using word boundaries
           # \\b ensures to match complete words, avoiding false positives
-          na_pattern <- "\\bNA\\b|\\bInf\\b"
+          na_pattern <- "\\bNA\\b|\\bInf\\b|^0 \\(0%\\)$"
           if_else(str_detect(., na_pattern), NA_character_, .)
         }))
     ) |> 
