@@ -186,11 +186,15 @@ theme_gt_compact <- function(tbl) {
 #' * [clean_table()] for additional table styling
 #'
 #' @export
-extras <- function(tbl, pval = TRUE) {
+extras <- function(tbl, pval = TRUE, overall = TRUE) {
   result <- tbl |>
-    gtsummary::add_overall(last = TRUE) |>
     gtsummary::bold_labels() |> 
     gtsummary::modify_header(label ~ "")
+
+  if (overall) {
+    result <- result |> 
+      gtsummary::add_overall(last = TRUE)
+  }
   
   if (pval) {
     result <- result |> 
