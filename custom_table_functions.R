@@ -356,6 +356,9 @@ create_labels <- function(data) {
 #' 
 #' @export
 add_auto_labels <- function(tbl) {
+
+  # browser()
+  
   # Extract the original dataset from the table object
   # This data is stored in tbl$inputs$data and contains all variables used in the table
   original_data <- tbl$inputs$data
@@ -394,12 +397,8 @@ add_auto_labels <- function(tbl) {
   override_labels <- tbl$inputs$label %||% list()
   
   if (length(override_labels) > 0) {
-    # Convert override named list format to formula format for consistency
-    # imap gives both value (.x = "Custom Label") and name (.y = "variable")
-    # Result: list(variable ~ "Custom Label") matching auto_labels format
-    existing_formulas <- purrr::imap(override_labels, ~ {
-      as.formula(paste(.y, '~', shQuote(.x)))
-    })
+    # DON'T convert override labels - they're already in the correct format for reconstruction!
+    # gtsummary expects the original input format when using do.call()
     
     # Extract variable names from the override custom labels
     # These variables should NOT be overwritten by dictionary labels
@@ -414,9 +413,27 @@ add_auto_labels <- function(tbl) {
     keep_auto <- !filtered_auto_vars %in% existing_vars
     final_auto_labels <- auto_labels_filtered[keep_auto]
     
-    # Combine custom labels (priority) with non-conflicting dictionary labels
-    # Order matters: existing_formulas come first to maintain precedence
-    combined_labels <- c(existing_formulas, final_auto_labels)
+    # Convert remaining dictionary labels to named list format to match override format
+    if (length(final_auto_labels) > 0) {
+      auto_as_named_list <- setNames(
+        purrr::map_chr(final_auto_labels, ~ as.character(.x)[3]), # Extract description
+        purrr::map_chr(final_auto_labels, ~ all.vars(.x)[1])      # Extract variable name
+      )
+      # Combine override labels (named list) with auto labels (converted to named list)
+      combined_labels <- c(override_labels, auto_as_named_list)
+    } else {
+      # No additional dictionary labels needed, use only manual overrides
+      combined_labels <- override_labels
+    }
+
+    # DEBUG: Check final structure
+    # print("Manual override vars:")
+    # print(existing_vars)
+    # print("Dictionary vars being added:")
+    # print(filtered_auto_vars[keep_auto])
+    # print("Any duplicates?")
+    # print(intersect(existing_vars, filtered_auto_vars[keep_auto]))
+
   } else {
     # No existing override custom labels found, use all filtered dictionary labels
     combined_labels <- auto_labels_filtered
