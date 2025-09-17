@@ -5,13 +5,16 @@ remotes::install_cran(c("froggeR"))
 remotes::install_github(c(
   "kyleGrealis/nascaR.data",
   "hadley/emo",
+  "wch/extrafont",
   "hollyyfc/lme4u",
-  "e-mitchell/meps_r_pkg/MEPS"
+  "e-mitchell/meps_r_pkg/MEPS",
+  "r-causal/propensity"
 ))
 
 remotes::install_cran("pak")
 
-install.packages(
+# install.packages(
+remotes::install_cran(
   c(
     "almanac",
     "applicable",
@@ -35,7 +38,7 @@ install.packages(
     "doParallel",
     "echarts4r",
     "embed",
-    "extrafont",
+    # "extrafont",
     "extrasteps",
     "finetune",
     "flextable",
