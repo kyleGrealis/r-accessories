@@ -36,6 +36,7 @@ remotes::install_cran(
     "DiagrammeR",
     "dimRed",
     "doParallel",
+    "earth",
     "echarts4r",
     "embed",
     # "extrafont",
