@@ -41,7 +41,7 @@ pak::pak(
     "earth",
     "echarts4r",
     "embed",
-    # "extrafont",
+    "extrafont",
     "extrasteps",
     "finetune",
     "flextable",
