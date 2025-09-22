@@ -1,5 +1,6 @@
 install.packages("remotes")
 install.packages("tidyverse")
+install.packages('keyring', type = 'source')
 
 remotes::install_cran(c("froggeR"))
 remotes::install_github(c(
@@ -14,7 +15,8 @@ remotes::install_github(c(
 remotes::install_cran("pak")
 
 # install.packages(
-remotes::install_cran(
+# remotes::install_cran(
+pak::pak(
   c(
     "almanac",
     "applicable",
