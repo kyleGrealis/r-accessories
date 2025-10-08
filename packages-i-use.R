@@ -22,7 +22,7 @@ install.packages('pak', repos = sprintf(
 
 # install.packages(
 # remotes::install_cran(
-pak::pak(
+pak::pkg_install(
   c(
     'almanac',
     'applicable',
@@ -125,7 +125,8 @@ pak::pak(
     'vetiver',
     'vip',
     'viridis'
-  )
+  ),
+  ask = FALSE
 )
 
 
