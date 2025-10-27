@@ -75,6 +75,7 @@ pak::pkg_install(
     'ltm',
     'mirai',
     'mockery',
+    'nanoparquet',
     'nhanesA',
     'palmerpenguins',
     'pandoc',
