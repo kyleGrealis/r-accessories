@@ -7,6 +7,7 @@ remotes::install_github(c(
   'kyleGrealis/nascaR.data',
   'hadley/emo',
   'wch/extrafont',
+  'tgerke/ggconsort',
   'hollyyfc/lme4u',
   'e-mitchell/meps_r_pkg/MEPS',
   'r-causal/propensity'
