@@ -11,7 +11,7 @@ install.packages("pak", repos = sprintf(
   R.Version()$arch
 ))
 
-install.packages(
+remotes::install_cran(
   c(
     "almanac",
     "applicable",
