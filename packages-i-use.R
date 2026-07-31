@@ -93,6 +93,7 @@ remotes::install_cran(
     "nhanesdata",
     "palmerpenguins",
     "pandoc",
+    "pkgdown",
     "parallelly",
     "patchwork",
     "patchwork",
